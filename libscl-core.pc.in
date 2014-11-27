@@ -1,0 +1,14 @@
+# Package Information for pkg-config
+
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libscl-core
+Description: SCL Core - A library for developing software keyboards
+Version: 1.0
+Requires: libscl-common
+Libs: -L${libdir} -lscl-core
+Cflags: -I${includedir}/libscl-core
+
