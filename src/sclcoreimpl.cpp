@@ -70,6 +70,16 @@ ISCLCoreEventCallback* CSCLCoreImpl::get_core_event_callback()
     return ret;
 }
 
+CSCLCoreUI* CSCLCoreImpl::get_core_ui()
+{
+    return &m_core_ui;
+}
+
+CSCLConnection* CSCLCoreImpl::get_connection()
+{
+    return &m_connection;
+}
+
 void CSCLCoreImpl::config_reload()
 {
     m_connection.config_reload();

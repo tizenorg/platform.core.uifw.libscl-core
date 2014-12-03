@@ -45,6 +45,9 @@ public:
     void set_core_event_callback(ISCLCoreEventCallback *callback);
     ISCLCoreEventCallback* get_core_event_callback();
 
+    CSCLCoreUI* get_core_ui();
+    CSCLConnection* get_connection();
+
     void config_reload();
     sclboolean config_read_int(const sclchar *name, sclint &value);
     sclboolean config_read_string(const sclchar *name, std::string &value);

@@ -51,8 +51,8 @@ sclboolean CSCLCoreUIEFL::init()
     m_rotation_degree = -1;
 
     for (int loop = 0;loop < OPTION_WINDOW_TYPE_MAX;loop++) {
-        m_option_window_info[OPTION_WINDOW_TYPE_NORMAL].window = SCLWINDOW_INVALID;
-        m_option_window_info[OPTION_WINDOW_TYPE_NORMAL].handler = NULL;
+        m_option_window_info[loop].window = SCLWINDOW_INVALID;
+        m_option_window_info[loop].handler = NULL;
     }
 
     return ret;
@@ -413,10 +413,53 @@ set_transient_for_app_window(Evas_Object *window)
     }
 }
 
+static void
+set_transient_for_isf_setting_window(Evas_Object *window)
+{
+    /* Set a transient window for window stack */
+    /* Gets the current XID of the active window into the root window property  */
+    Atom type_return;
+    unsigned long nitems_return;
+    unsigned long bytes_after_return;
+    int format_return;
+    unsigned char *data = NULL;
+    Ecore_X_Window xControlWindow, xSettingWindow;
+    Ecore_X_Window xWindow = elm_win_xwindow_get(window);
+    gint ret = 0;
+
+    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
+        ecore_x_atom_get("_ISF_CONTROL_WINDOW"),
+        0, G_MAXLONG, False, XA_WINDOW, &type_return,
+        &format_return, &nitems_return, &bytes_after_return,
+        &data);
+
+    if (ret == Success) {
+        if (data) {
+            if (type_return == XA_WINDOW) {
+                xControlWindow = *(Window *)data;
+
+                ecore_x_window_prop_xid_get (xControlWindow, ecore_x_atom_get ("ISF Setting window"),
+                    ECORE_X_ATOM_WINDOW, &xSettingWindow, 1);
+
+                LOGD("TRANSIENT_FOR SET : %x , %x", xSettingWindow, xWindow);
+                ecore_x_icccm_transient_for_set(xWindow, xSettingWindow);
+            }
+            XFree(data);
+        }
+    }
+}
+
 sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 {
     if (type < 0 || type >= OPTION_WINDOW_TYPE_MAX) {
         return SCLWINDOW_INVALID;
+    }
+
+    /* Just in case the previous option window for setting application exists */
+    if (type == OPTION_WINDOW_TYPE_SETTING_APPLICATION) {
+        if (m_option_window_info[type].window != SCLWINDOW_INVALID) {
+            destroy_option_window(m_option_window_info[type].window);
+        }
     }
 
     Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
@@ -440,15 +483,6 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 
     elm_win_indicator_mode_set (window, ELM_WIN_INDICATOR_SHOW);
 
-    Ecore_Event_Handler *handler = NULL;
-    if (type == OPTION_WINDOW_TYPE_NORMAL) {
-        handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
-        set_transient_for_app_window(window);
-    }
-
-    m_option_window_info[type].window = window;
-    m_option_window_info[type].handler = handler;
-
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -456,6 +490,18 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
             callback->on_create_option_window(window, type);
         }
     }
+
+    Ecore_Event_Handler *handler = NULL;
+    if (type == OPTION_WINDOW_TYPE_NORMAL) {
+        handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
+        set_transient_for_app_window(window);
+    } else if (type == OPTION_WINDOW_TYPE_SETTING_APPLICATION) {
+        set_transient_for_isf_setting_window(window);
+        evas_object_show(window);
+    }
+
+    m_option_window_info[type].window = window;
+    m_option_window_info[type].handler = handler;
 
     return window;
 }
@@ -472,14 +518,14 @@ void CSCLCoreUIEFL::destroy_option_window(sclwindow window)
 
     for (int loop = 0;loop < OPTION_WINDOW_TYPE_MAX;loop++) {
         if (m_option_window_info[loop].window == window) {
-            m_option_window_info[OPTION_WINDOW_TYPE_NORMAL].window = SCLWINDOW_INVALID;
+            evas_object_del(NATIVE_WINDOW_CAST(window));
+            m_option_window_info[loop].window = SCLWINDOW_INVALID;
             if (m_option_window_info[loop].handler) {
                 ecore_event_handler_del(m_option_window_info[loop].handler);
                 m_option_window_info[loop].handler = NULL;
             }
         }
     }
-    evas_object_del(NATIVE_WINDOW_CAST(window));
 }
 
 void CSCLCoreUIEFL::set_screen_rotation_degree(int degree)
