@@ -151,7 +151,7 @@ void accessibility_changed_cb(keynode_t *key, void* data)
 {
     int vconf_value = 0;
     if (vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
-        LOGD("accessbility state : %d\n", vconf_value);
+        LOGD("accessibility state : %d\n", vconf_value);
 
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
@@ -303,24 +303,18 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         Evas_Object *main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
         m_main_window = SCL_WINDOW_CAST(main_window);
 
-        //elm_win_alpha_set(main_window, EINA_TRUE);
         elm_win_borderless_set(main_window, EINA_TRUE);
         elm_win_keyboard_win_set(main_window, EINA_TRUE);
         elm_win_autodel_set(main_window, EINA_TRUE);
         elm_win_title_set(main_window, "Tizen Keyboard");
+        elm_win_prop_focus_skip_set(main_window, EINA_TRUE);
+
         unsigned int set = 1;
         ecore_x_window_prop_card32_set(elm_win_xwindow_get(main_window),
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
             &set, 1);
 
-#ifdef FULL_SCREEN_TEST
-    elm_win_fullscreen_set(main_window, EINA_TRUE);
-#endif
-
-        /*Evas_Object *box = elm_box_add(main_window);
-        evas_object_size_hint_weight_set(box, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        evas_object_size_hint_align_set(box, EVAS_HINT_FILL, EVAS_HINT_FILL);
-        elm_win_resize_object_add(main_window, box);*/
+        ecore_x_icccm_name_class_set(elm_win_xwindow_get(main_window), "Virtual Keyboard", "ISF");
 
         vconf_notify_key_changed(VCONFKEY_LANGSET, language_changed_cb, NULL);
         vconf_notify_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb, NULL);
@@ -349,7 +343,10 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         vconf_ignore_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
         vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
-        ecore_event_handler_del(XClientMsgHandler);
+        if (XClientMsgHandler) {
+            ecore_event_handler_del(XClientMsgHandler);
+            XClientMsgHandler = NULL;
+        }
 
         elm_shutdown();
     }
