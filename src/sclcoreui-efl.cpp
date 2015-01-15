@@ -128,25 +128,6 @@ void language_changed_cb(keynode_t *key, void* data)
     }
 }
 
-void theme_changed_cb(keynode_t *key, void* data)
-{
-    char clang[256] = {0};
-    char *vconf_str = vconf_get_str(VCONFKEY_SETAPPL_WIDGET_THEME_STR);
-    if (vconf_str) {
-        snprintf(clang, sizeof(clang), "%s",extract_themename_from_theme_file_path(vconf_str));
-        free(vconf_str);
-    }
-    LOGD("current theme is %s\n",clang);
-
-    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-    if (impl) {
-        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-        if (callback) {
-            callback->on_set_theme_name(clang);
-        }
-    }
-}
-
 void accessibility_changed_cb(keynode_t *key, void* data)
 {
     int vconf_value = 0;
@@ -317,12 +298,10 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         ecore_x_icccm_name_class_set(elm_win_xwindow_get(main_window), "Virtual Keyboard", "ISF");
 
         vconf_notify_key_changed(VCONFKEY_LANGSET, language_changed_cb, NULL);
-        vconf_notify_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb, NULL);
         vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb, NULL);
 
         /* Should we call these callback functions here? */
         language_changed_cb(NULL, NULL);
-        theme_changed_cb(NULL, NULL);
         accessibility_changed_cb(NULL, NULL);
 
         impl->init(display);
@@ -340,7 +319,6 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         impl->fini();
 
         vconf_ignore_key_changed(VCONFKEY_LANGSET, language_changed_cb);
-        vconf_ignore_key_changed(VCONFKEY_SETAPPL_WIDGET_THEME_STR, theme_changed_cb);
         vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
         if (XClientMsgHandler) {
