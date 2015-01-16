@@ -427,7 +427,7 @@ static void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTab
             callback->on_update_lookup_table(lookup_table);
 
             std::vector<scim::WideString> labels;
-            for (int loop = 0;loop < lookup_table.candidate_labels.size();loop) {
+            for (int loop = 0;loop < lookup_table.candidate_labels.size();loop++) {
                 labels.push_back(scim::utf8_mbstowcs(lookup_table.candidate_labels.at(loop).c_str()));
             }
             table.set_candidate_labels(labels);

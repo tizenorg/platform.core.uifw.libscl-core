@@ -68,6 +68,8 @@ sclwindow CSCLCoreUIEFL::get_main_window()
     if (m_initialized) {
         return m_main_window;
     }
+    else
+        return NULL;
 }
 
 void CSCLCoreUIEFL::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
@@ -144,7 +146,7 @@ void accessibility_changed_cb(keynode_t *key, void* data)
     }
 }
 
-static Eina_Bool _client_message_cb (void *data, int type, void *event)
+static Eina_Bool _client_message_cb(void *data, int type, void *event)
 {
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
 
@@ -184,8 +186,8 @@ static Eina_Bool _client_message_cb (void *data, int type, void *event)
                 callback->on_set_rotation_degree(degree);
             }
             Ecore_X_Window control_window = 0;
-            Ecore_X_Atom atom = ecore_x_atom_get ("_ISF_CONTROL_WINDOW");
-            Ecore_X_Window root = ecore_x_window_root_first_get ();
+            Ecore_X_Atom atom = ecore_x_atom_get("_ISF_CONTROL_WINDOW");
+            Ecore_X_Window root = ecore_x_window_root_first_get();
             if (ecore_x_window_prop_xid_get(root, atom, ECORE_X_ATOM_WINDOW, &control_window, 1) == 1) {
                 ecore_x_client_message32_send(control_window, ECORE_X_ATOM_E_WINDOW_ROTATION_CHANGE_REQUEST,
                     ECORE_X_EVENT_MASK_WINDOW_CONFIGURE,
@@ -215,7 +217,7 @@ int CSCLCoreUIEFL::get_screen_rotation_degree()
 
         LOGD("Trying to get app window degree for %p\n", keypad_win);
         Ecore_X_Window win = elm_win_xwindow_get(NATIVE_WINDOW_CAST(keypad_win));
-        ret = XGetWindowProperty((Display *)ecore_x_display_get (),
+        ret = XGetWindowProperty((Display *)ecore_x_display_get(),
             ecore_x_window_root_get(win),
             ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
             0, G_MAXLONG, False, XA_WINDOW, &type_return,
@@ -279,7 +281,7 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         elm_init(argc, argv);
 
-        elm_policy_set (ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
+        elm_policy_set(ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
         Evas_Object *main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
         m_main_window = SCL_WINDOW_CAST(main_window);
@@ -307,7 +309,7 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         impl->init(display);
 
         Ecore_Event_Handler *XClientMsgHandler =
-            ecore_event_handler_add (ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, this);
+            ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, this);
 
         signal(SIGQUIT, signal_handler);
         signal(SIGTERM, signal_handler);
@@ -370,7 +372,7 @@ set_transient_for_app_window(Evas_Object *window)
     Ecore_X_Window xWindow = elm_win_xwindow_get(window);
     gint ret = 0;
 
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
+    ret = XGetWindowProperty((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
         ecore_x_atom_get("_ISF_ACTIVE_WINDOW"),
         0, G_MAXLONG, False, XA_WINDOW, &type_return,
         &format_return, &nitems_return, &bytes_after_return,
@@ -402,7 +404,7 @@ set_transient_for_isf_setting_window(Evas_Object *window)
     Ecore_X_Window xWindow = elm_win_xwindow_get(window);
     gint ret = 0;
 
-    ret = XGetWindowProperty ((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
+    ret = XGetWindowProperty((Display *)ecore_x_display_get(), ecore_x_window_root_get(xWindow),
         ecore_x_atom_get("_ISF_CONTROL_WINDOW"),
         0, G_MAXLONG, False, XA_WINDOW, &type_return,
         &format_return, &nitems_return, &bytes_after_return,
@@ -413,7 +415,7 @@ set_transient_for_isf_setting_window(Evas_Object *window)
             if (type_return == XA_WINDOW) {
                 xControlWindow = *(Window *)data;
 
-                ecore_x_window_prop_xid_get (xControlWindow, ecore_x_atom_get ("ISF Setting window"),
+                ecore_x_window_prop_xid_get(xControlWindow, ecore_x_atom_get("ISF Setting window"),
                     ECORE_X_ATOM_WINDOW, &xSettingWindow, 1);
 
                 LOGD("TRANSIENT_FOR SET : %x , %x", xSettingWindow, xWindow);
@@ -455,7 +457,7 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
     int rots[] = { 0, 90, 180, 270 };
     elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
 
-    elm_win_indicator_mode_set (window, ELM_WIN_INDICATOR_SHOW);
+    elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
