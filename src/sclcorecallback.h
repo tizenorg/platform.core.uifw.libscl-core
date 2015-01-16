@@ -86,7 +86,6 @@ struct ISCLCoreEventCallback {
     virtual void on_turn_on_log(sclu32 on) {}
 
     virtual void on_set_display_language(const sclchar *language) {}
-    virtual void on_set_theme_name(const sclchar *name) {}
     virtual void on_set_rotation_degree(sclint degree) {}
     virtual void on_set_accessibility_state(sclboolean state) {}
 
