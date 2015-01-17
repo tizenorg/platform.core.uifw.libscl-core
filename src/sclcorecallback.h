@@ -83,7 +83,6 @@ struct ISCLCoreEventCallback {
     virtual void on_associate_table_page_up(sclint ic, const sclchar *uuid) {}
     virtual void on_associate_table_page_down(sclint ic, const sclchar *uuid) {}
     virtual void on_update_associate_table_page_size(sclint ic, const sclchar *uuid, sclint page_size) {}
-    virtual void on_turn_on_log(sclu32 on) {}
 
     virtual void on_set_display_language(const sclchar *language) {}
     virtual void on_set_rotation_degree(sclint degree) {}

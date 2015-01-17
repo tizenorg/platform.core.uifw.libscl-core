@@ -475,16 +475,6 @@ static void slot_update_associate_table_page_size (const scim::HelperAgent *, in
     }
 }
 
-static void slot_turn_on_log (const scim::HelperAgent *agent, scim::uint32 &on) {
-    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-    if (impl) {
-        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-        if (callback) {
-            callback->on_turn_on_log(on);
-        }
-    }
-}
-
 static void slot_show_ise_option_window (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -594,7 +584,6 @@ sclboolean CSCLConnectionISF::init()
     m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
     m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
     m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
-    m_helper_agent.signal_connect_turn_on_log (scim::slot (slot_turn_on_log));
     m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
 
     return ret;
