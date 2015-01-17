@@ -37,6 +37,9 @@ A devel pacakge of libscl-core library that helps developing S/W Keyboard
 export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
+
+rm -rf CMakeFiles
+rm -rf CMakeCache.txt
 cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}
 make %{?jobs:-j%jobs}
 
