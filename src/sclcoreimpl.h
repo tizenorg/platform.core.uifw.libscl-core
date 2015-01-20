@@ -76,11 +76,8 @@ public:
     //void update_candidate_string (const LookupTable &table) const;
     //void update_associate_string (const LookupTable &table) const;
     void update_input_context(sclu32 type, sclu32 value);
-    //void get_surrounding_text     (const String                &uuid,
-    //                               int                          maxlen_before,
-    //                               int                          maxlen_after) const;
-    //void delete_surrounding_text  (int                          offset,
-    //                               int                          len) const;
+    void get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
+    void delete_surrounding_text(sclint offset, sclint len) const;
     void set_candidate_position(sclint left, sclint top);
     void candidate_hide(void);
     //void get_candidate_window_geometry (const String           &uuid) const;

@@ -205,6 +205,20 @@ void CSCLCore::update_input_context(sclu32 type, sclu32 value)
     }
 }
 
+void CSCLCore::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const
+{
+    if (m_impl) {
+        m_impl->get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLCore::delete_surrounding_text(sclint offset, sclint len) const
+{
+    if (m_impl) {
+        m_impl->delete_surrounding_text(offset, len);
+    }
+}
+
 void CSCLCore::set_candidate_position(sclint left, sclint top)
 {
     if (m_impl) {

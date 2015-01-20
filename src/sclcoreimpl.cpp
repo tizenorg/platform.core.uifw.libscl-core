@@ -195,6 +195,16 @@ void CSCLCoreImpl::update_input_context(sclu32 type, sclu32 value)
     m_connection.update_input_context(type, value);
 }
 
+void CSCLCoreImpl::get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const
+{
+    m_connection.get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+}
+
+void CSCLCoreImpl::delete_surrounding_text(sclint offset, sclint len) const
+{
+    m_connection.delete_surrounding_text(offset, len);
+}
+
 void CSCLCoreImpl::set_candidate_position(sclint left, sclint top)
 {
     m_connection.set_candidate_position(left, top);

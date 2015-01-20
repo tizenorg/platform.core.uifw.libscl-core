@@ -221,11 +221,11 @@ public:
     /**
      * @ brief Request to get surrounding text.
      *
-     * @param[in] uuid The helper ISE UUID.
+     * @param[in] ic_uuid The helper ISE UUID.
      * @param[in] maxlen_before The max length of before.
      * @param[in] maxlen_after The max length of after.
      */
-    void get_surrounding_text(const sclchar *uuid, sclint maxlen_before, sclint maxlen_after) const;
+    void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
 
     /**
      * @ brief Request to delete surrounding text.
@@ -233,7 +233,7 @@ public:
      * @param[in] offset The offset for cursor position.
      * @param[in] len The length for delete text.
      */
-    void delete_surrounding_text(int offset, int len) const;
+    void delete_surrounding_text(sclint offset, sclint len) const;
 
     /**
      * @ brief Set candidate position in screen.

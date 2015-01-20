@@ -71,6 +71,8 @@ public:
     void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
     void update_aux_string(const sclchar *str);
     void update_input_context(sclu32 type, sclu32 value);
+    void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
+    void delete_surrounding_text(sclint offset, sclint len) const;
     void set_candidate_position(sclint left, sclint top);
     void candidate_hide(void);
     void set_keyboard_ise_by_uuid(const sclchar *uuid);

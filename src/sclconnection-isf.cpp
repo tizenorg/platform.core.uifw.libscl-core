@@ -847,6 +847,24 @@ void CSCLConnectionISF::update_input_context(sclu32 type, sclu32 value)
     }
 }
 
+void CSCLConnectionISF::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const
+{
+    if (m_initialized) {
+        scim::String uuid;
+        if (ic_uuid) {
+            uuid = scim::String(ic_uuid);
+        }
+        m_helper_agent.get_surrounding_text(uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLConnectionISF::delete_surrounding_text(sclint offset, sclint len) const
+{
+    if (m_initialized) {
+        m_helper_agent.delete_surrounding_text(offset, len);
+    }
+}
+
 void CSCLConnectionISF::set_candidate_position(sclint left, sclint top)
 {
     if (m_initialized) {
