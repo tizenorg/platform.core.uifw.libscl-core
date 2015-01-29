@@ -22,10 +22,15 @@ using namespace scl;
 CSCLCoreImpl::CSCLCoreImpl()
 {
     m_event_callback = NULL;
+    m_display = NULL;
 }
 
 CSCLCoreImpl::~CSCLCoreImpl()
 {
+    if (m_display) {
+        free(m_display);
+        m_display = NULL;
+    }
 }
 
 CSCLCoreImpl*
@@ -225,12 +230,25 @@ void CSCLCoreImpl::get_keyboard_ise(const sclchar *uuid)
     m_connection.get_keyboard_ise(uuid);
 }
 
-void CSCLCoreImpl::run(const sclchar *display)
+void CSCLCoreImpl::on_run(const sclchar *display)
 {
     m_core_ui.init();
     m_connection.init();
 
-    m_core_ui.run(display);
+    if (m_display) {
+        free (m_display);
+    }
+
+    m_display = strdup(display);
+
+    if (m_event_callback) {
+        m_event_callback->on_run(1, NULL);
+    }
+}
+
+void CSCLCoreImpl::run()
+{
+    m_core_ui.run(m_display);
 
     m_connection.fini();
     m_core_ui.fini();

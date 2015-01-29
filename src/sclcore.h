@@ -43,6 +43,8 @@ public:
     CSCLCore(ISCLCoreEventCallback *callback);
     ~CSCLCore();
 
+    void run();
+
     /**
      * @brief Request ISF to reload all configuration.
      */

@@ -940,7 +940,7 @@ extern "C"
         _scim_config = config;
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
-            impl->run(display.c_str());
+            impl->on_run(display.c_str());
         }
     }
 }

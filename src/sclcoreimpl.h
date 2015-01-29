@@ -33,6 +33,8 @@ class CSCLCoreImpl
 private:
     CSCLCoreImpl();
 
+    sclchar* m_display;
+
 public:
     ~CSCLCoreImpl();
     static CSCLCoreImpl* get_instance();
@@ -40,7 +42,8 @@ public:
     void init(const sclchar *display);
     void fini();
 
-    void run(const sclchar *display);
+    void on_run(const sclchar *display);
+    void run();
 
     void set_core_event_callback(ISCLCoreEventCallback *callback);
     ISCLCoreEventCallback* get_core_event_callback();

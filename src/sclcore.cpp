@@ -34,6 +34,13 @@ CSCLCore::~CSCLCore()
     m_impl = NULL;
 }
 
+void CSCLCore::run()
+{
+    if (m_impl) {
+        m_impl->run();
+    }
+}
+
 void CSCLCore::config_reload()
 {
     if (m_impl) {

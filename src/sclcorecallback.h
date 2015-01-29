@@ -44,6 +44,7 @@ struct ISCLCoreEventCallback {
     virtual void on_get_app_info(SclCoreAppInfo *info) {}
 
     virtual void on_init() {}
+    virtual void on_run(int argc, char **argv) {}
     virtual void on_exit() {}
     virtual void on_attach_input_context(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_detach_input_context(sclint ic, const sclchar *ic_uuid) {}
