@@ -42,7 +42,7 @@ public:
     void init(const sclchar *display);
     void fini();
 
-    void on_run(const sclchar *display);
+    void on_run(const sclchar *uuid, const sclchar *display);
     void run();
 
     void set_core_event_callback(ISCLCoreEventCallback *callback);
@@ -50,6 +50,7 @@ public:
 
     CSCLCoreUI* get_core_ui();
     CSCLConnection* get_connection();
+    sclchar* get_uuid();
 
     void config_reload();
     sclboolean config_read_int(const sclchar *name, sclint &value);
@@ -101,6 +102,7 @@ private:
 
     CSCLConnection m_connection;
     CSCLCoreUI m_core_ui;
+    sclchar *m_uuid;
 };
 
 }

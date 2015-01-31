@@ -17,7 +17,7 @@
 
 #include "sclconnection-isf.h"
 #include "sclcoreimpl.h"
-
+#include <isf_control.h>
 #include <Elementary.h>
 #include <dlog.h>
 
@@ -530,14 +530,17 @@ sclboolean CSCLConnectionISF::init()
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
-        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-        if (callback) {
-            SclCoreAppInfo appinfo;
-            callback->on_get_app_info(&appinfo);
-            m_helper_info.uuid = scim::String(appinfo.uuid.c_str());
-            m_helper_info.name = scim::String(appinfo.name.c_str());
-            m_helper_info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
-                scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
+        sclchar *uuid = impl->get_uuid();
+        if (uuid) {
+            sclchar *name = NULL;
+            int options = 0;
+            if (isf_control_get_ise_info(uuid, &name, NULL, NULL, &options) == 0) {
+                m_helper_info.uuid = scim::String(uuid);
+                m_helper_info.name = scim::String(name);
+                m_helper_info.option = (scluint)options;
+                if (name)
+                    free(name);
+            }
         }
     }
 
@@ -908,16 +911,17 @@ extern "C"
     bool scim_helper_module_get_helper_info (unsigned int idx, scim::HelperInfo &info) {
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
-            ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-            if (callback) {
-                SclCoreAppInfo appinfo;
-                callback->on_get_app_info(&appinfo);
-                info.uuid = scim::String(appinfo.uuid.c_str());
-                info.name = scim::String(appinfo.name.c_str());
-                info.option = scim::SCIM_HELPER_STAND_ALONE | scim::SCIM_HELPER_NEED_SCREEN_INFO |
-                    scim::SCIM_HELPER_NEED_SPOT_LOCATION_INFO | scim::SCIM_HELPER_AUTO_RESTART;
-
-                return true;
+            sclchar *uuid = impl->get_uuid();
+            if (uuid) {
+                sclchar *name = NULL;
+                int options = 0;
+                if (isf_control_get_ise_info(uuid, &name, NULL, NULL, &options) == 0) {
+                    info.uuid = scim::String(uuid);
+                    info.name = scim::String(name);
+                    info.option = (scluint)options;
+                    if (name)
+                        free(name);
+                }
             }
         }
         return false;
@@ -926,11 +930,16 @@ extern "C"
     scim::String scim_helper_module_get_helper_language (unsigned int idx) {
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
-            ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-            if (callback) {
-                SclCoreAppInfo appinfo;
-                callback->on_get_app_info(&appinfo);
-                return scim::String(appinfo.language.c_str());
+            sclchar *uuid = impl->get_uuid();
+            if (uuid) {
+                sclchar *language = NULL;
+                if (isf_control_get_ise_info(uuid, NULL, &language, NULL, NULL) == 0) {
+                    if (language) {
+                        scim::String lang = scim::String(language);
+                        free(language);
+                        return lang;
+                    }
+                }
             }
         }
         return scim::String("");
@@ -940,7 +949,7 @@ extern "C"
         _scim_config = config;
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
-            impl->on_run(display.c_str());
+            impl->on_run(uuid.c_str(), display.c_str());
         }
     }
 }

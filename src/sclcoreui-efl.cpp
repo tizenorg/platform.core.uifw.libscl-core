@@ -17,7 +17,7 @@
 
 #include "sclcoreui-efl.h"
 #include "sclcoreimpl.h"
-
+#include <isf_control.h>
 #include <Elementary.h>
 #include <dlog.h>
 
@@ -267,11 +267,14 @@ void CSCLCoreUIEFL::run(const sclchar *display)
     std::string name;
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
-        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-        if (callback) {
-            SclCoreAppInfo appinfo;
-            callback->on_get_app_info(&appinfo);
-            name = appinfo.name;
+        sclchar *uuid = impl->get_uuid();
+        if (uuid) {
+            sclchar *label = NULL;
+            if (isf_control_get_ise_info(uuid, &label, NULL, NULL, NULL) == 0) {
+                name = std::string(label);
+                if (label)
+                    free(label);
+            }
         }
 
         argv [0] = const_cast<char *> (name.c_str());

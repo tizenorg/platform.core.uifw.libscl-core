@@ -23,6 +23,7 @@ CSCLCoreImpl::CSCLCoreImpl()
 {
     m_event_callback = NULL;
     m_display = NULL;
+    m_uuid = NULL;
 }
 
 CSCLCoreImpl::~CSCLCoreImpl()
@@ -30,6 +31,10 @@ CSCLCoreImpl::~CSCLCoreImpl()
     if (m_display) {
         free(m_display);
         m_display = NULL;
+    }
+    if (m_uuid) {
+        free(m_uuid);
+        m_uuid = NULL;
     }
 }
 
@@ -83,6 +88,11 @@ CSCLCoreUI* CSCLCoreImpl::get_core_ui()
 CSCLConnection* CSCLCoreImpl::get_connection()
 {
     return &m_connection;
+}
+
+sclchar* CSCLCoreImpl::get_uuid()
+{
+    return m_uuid;
 }
 
 void CSCLCoreImpl::config_reload()
@@ -230,10 +240,16 @@ void CSCLCoreImpl::get_keyboard_ise(const sclchar *uuid)
     m_connection.get_keyboard_ise(uuid);
 }
 
-void CSCLCoreImpl::on_run(const sclchar *display)
+void CSCLCoreImpl::on_run(const sclchar *uuid, const sclchar *display)
 {
     m_core_ui.init();
     m_connection.init();
+
+    if (m_uuid) {
+        free (m_uuid);
+    }
+
+    m_uuid = strdup(uuid);
 
     if (m_display) {
         free (m_display);
@@ -242,7 +258,7 @@ void CSCLCoreImpl::on_run(const sclchar *display)
     m_display = strdup(display);
 
     if (m_event_callback) {
-        m_event_callback->on_run(1, NULL);
+        m_event_callback->on_run(0, NULL);
     }
 }
 

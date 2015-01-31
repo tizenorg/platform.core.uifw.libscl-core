@@ -41,8 +41,6 @@ typedef struct {
 } SclCoreAppInfo;
 
 struct ISCLCoreEventCallback {
-    virtual void on_get_app_info(SclCoreAppInfo *info) {}
-
     virtual void on_init() {}
     virtual void on_run(int argc, char **argv) {}
     virtual void on_exit() {}
