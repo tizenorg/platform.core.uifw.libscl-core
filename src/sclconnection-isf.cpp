@@ -328,13 +328,13 @@ static void slot_update_candidate_geometry (const scim::HelperAgent *agent, int 
 }
 static void slot_update_keyboard_ise (const scim::HelperAgent *agent, int ic, const scim::String &uuid,
                                                   const scim::String &ise_name, const scim::String &ise_uuid) {
-   CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-   if (impl) {
-       ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-       if (callback) {
-           callback->on_update_keyboard_ise(ic, uuid.c_str(), ise_name.c_str(), ise_uuid.c_str());
-       }
-   }
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_update_keyboard_ise(ic, uuid.c_str(), ise_name.c_str(), ise_uuid.c_str());
+        }
+    }
 }
 
 static void slot_candidate_more_window_show (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
