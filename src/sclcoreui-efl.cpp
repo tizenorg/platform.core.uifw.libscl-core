@@ -286,13 +286,13 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         elm_policy_set(ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
-        Evas_Object *main_window = elm_win_add(NULL, "Tizen Keyboard", ELM_WIN_UTILITY);
+        Evas_Object *main_window = elm_win_add(NULL, name.c_str(), ELM_WIN_UTILITY);
         m_main_window = SCL_WINDOW_CAST(main_window);
 
         elm_win_borderless_set(main_window, EINA_TRUE);
         elm_win_keyboard_win_set(main_window, EINA_TRUE);
         elm_win_autodel_set(main_window, EINA_TRUE);
-        elm_win_title_set(main_window, "Tizen Keyboard");
+        elm_win_title_set(main_window, name.c_str());
         elm_win_prop_focus_skip_set(main_window, EINA_TRUE);
 
         unsigned int set = 1;
