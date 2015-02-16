@@ -921,6 +921,7 @@ extern "C"
                     info.option = (scluint)options;
                     if (name)
                         free(name);
+                    return true;
                 }
             }
         }
