@@ -486,6 +486,16 @@ static void slot_show_ise_option_window (const scim::HelperAgent *agent, int ic,
     }
 }
 
+static void slot_process_key_event (const scim::HelperAgent *agent, scim::KeyEvent &key, scim::uint32 &ret) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_process_key_event (key, &ret);
+        }
+    }
+}
+
 /* Internal input handler function */
 Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
@@ -588,6 +598,7 @@ sclboolean CSCLConnectionISF::init()
     m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
     m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
     m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
+    m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
 
     return ret;
 }
