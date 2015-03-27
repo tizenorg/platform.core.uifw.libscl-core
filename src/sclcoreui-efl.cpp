@@ -435,6 +435,22 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
         return SCLWINDOW_INVALID;
     }
 
+    ISCLCoreEventCallback *callback = NULL;
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        callback = impl->get_core_event_callback();
+        if (callback) {
+            sclboolean ret = false;
+            callback->on_check_option_window_availability(&ret);
+            if (ret == false) {
+                LOGW("on_create_option_window() is not available");
+                return SCLWINDOW_INVALID;
+            }
+        }
+        else
+            return SCLWINDOW_INVALID;
+    }
+
     /* Just in case the previous option window for setting application exists */
     if (type == OPTION_WINDOW_TYPE_SETTING_APPLICATION) {
         if (m_option_window_info[type].window != SCLWINDOW_INVALID) {
@@ -463,12 +479,8 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 
     elm_win_indicator_mode_set(window, ELM_WIN_INDICATOR_SHOW);
 
-    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-    if (impl) {
-        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
-        if (callback) {
-            callback->on_create_option_window(window, type);
-        }
+    if (callback) {
+        callback->on_create_option_window(window, type);
     }
 
     Ecore_Event_Handler *handler = NULL;
