@@ -31,19 +31,6 @@
 namespace scl
 {
 
-/* The SCL Core app information struct */
-typedef struct {
-    /* The name of this input method
-       Example : "Tizen keyboard" */
-    std::string name;
-    /* The uuid to identify this input method
-       Example : "12aa3425-f88d-45f4-a509-cee8dfe904e3"*/
-    std::string uuid;
-    /* The locale string that this input methods supports
-       Example : "en_US" */
-    std::string language;
-} SclCoreAppInfo;
-
 struct ISCLCoreEventCallback {
     virtual void on_init() {}
     virtual void on_run(int argc, char **argv) {}

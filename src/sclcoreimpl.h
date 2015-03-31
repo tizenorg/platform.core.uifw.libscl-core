@@ -97,7 +97,6 @@ public:
     void destroy_option_window(sclwindow window);
 
 private:
-    SclCoreAppInfo m_app_info;
     ISCLCoreEventCallback *m_event_callback;
 
     CSCLConnection m_connection;
