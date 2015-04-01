@@ -17,7 +17,6 @@
 
 #include "sclconnection-isf.h"
 #include "sclcoreimpl.h"
-#include <isf_control.h>
 #include <Elementary.h>
 #include <dlog.h>
 
@@ -552,15 +551,7 @@ sclboolean CSCLConnectionISF::init()
     if (impl) {
         sclchar *uuid = impl->get_uuid();
         if (uuid) {
-            sclchar *name = NULL;
-            int options = 0;
-            if (isf_control_get_ise_info(uuid, &name, NULL, NULL, &options) == 0) {
-                m_helper_info.uuid = scim::String(uuid);
-                m_helper_info.name = scim::String(name);
-                m_helper_info.option = (scluint)options;
-                if (name)
-                    free(name);
-            }
+            m_helper_info.uuid = uuid;
         }
     }
 
@@ -926,48 +917,6 @@ extern "C"
     void scim_module_exit (void) {
     }
 
-    unsigned int scim_helper_module_number_of_helpers (void) {
-        return 1;
-    }
-
-    bool scim_helper_module_get_helper_info (unsigned int idx, scim::HelperInfo &info) {
-        CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-        if (impl) {
-            sclchar *uuid = impl->get_uuid();
-            if (uuid) {
-                sclchar *name = NULL;
-                int options = 0;
-                if (isf_control_get_ise_info(uuid, &name, NULL, NULL, &options) == 0) {
-                    info.uuid = scim::String(uuid);
-                    info.name = scim::String(name);
-                    info.option = (scluint)options;
-                    if (name)
-                        free(name);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    scim::String scim_helper_module_get_helper_language (unsigned int idx) {
-        CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
-        if (impl) {
-            sclchar *uuid = impl->get_uuid();
-            if (uuid) {
-                sclchar *language = NULL;
-                if (isf_control_get_ise_info(uuid, NULL, &language, NULL, NULL) == 0) {
-                    if (language) {
-                        scim::String lang = scim::String(language);
-                        free(language);
-                        return lang;
-                    }
-                }
-            }
-        }
-        return scim::String("");
-    }
-
     void scim_helper_module_run_helper (const scim::String &uuid, const scim::ConfigPointer &config, const scim::String &display) {
         _scim_config = config;
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
@@ -976,3 +925,4 @@ extern "C"
         }
     }
 }
+

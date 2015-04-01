@@ -17,7 +17,6 @@
 
 #include "sclcoreui-efl.h"
 #include "sclcoreimpl.h"
-#include <isf_control.h>
 #include <Elementary.h>
 #include <dlog.h>
 
@@ -264,20 +263,13 @@ void CSCLCoreUIEFL::run(const sclchar *display)
     char *argv[4];
     int argc = 3;
 
-    std::string name;
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         sclchar *uuid = impl->get_uuid();
-        if (uuid) {
-            sclchar *label = NULL;
-            if (isf_control_get_ise_info(uuid, &label, NULL, NULL, NULL) == 0) {
-                name = std::string(label);
-                if (label)
-                    free(label);
-            }
-        }
+        if (!uuid)
+            uuid = "";
 
-        argv [0] = const_cast<char *> (name.c_str());
+        argv [0] = const_cast<char *> (uuid);
         argv [1] = (char *)"--display";
         argv [2] = const_cast<char *> (display);
         argv [3] = 0;
@@ -286,13 +278,13 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         elm_policy_set(ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
-        Evas_Object *main_window = elm_win_add(NULL, name.c_str(), ELM_WIN_UTILITY);
+        Evas_Object *main_window = elm_win_add(NULL, uuid, ELM_WIN_UTILITY);
         m_main_window = SCL_WINDOW_CAST(main_window);
 
         elm_win_borderless_set(main_window, EINA_TRUE);
         elm_win_keyboard_win_set(main_window, EINA_TRUE);
         elm_win_autodel_set(main_window, EINA_TRUE);
-        elm_win_title_set(main_window, name.c_str());
+        elm_win_title_set(main_window, uuid);
         elm_win_prop_focus_skip_set(main_window, EINA_TRUE);
 
         unsigned int set = 1;
