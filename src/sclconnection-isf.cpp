@@ -848,6 +848,23 @@ void CSCLConnectionISF::update_preedit_string(sclint ic, const sclchar *ic_uuid,
     }
 }
 
+void CSCLConnectionISF::update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs)
+{
+    if (m_initialized) {
+        scim::String uuid;
+        if (ic_uuid) {
+            uuid = scim::String(ic_uuid);
+        }
+        m_helper_agent.update_preedit_string(ic, uuid, scim::utf8_mbstowcs(str), attrs);
+
+        if (str && strlen(str) > 0) {
+            show_preedit_string(ic, ic_uuid);
+        } else {
+            hide_preedit_string(ic, ic_uuid);
+        }
+    }
+}
+
 void CSCLConnectionISF::update_aux_string(const sclchar *str)
 {
     if (m_initialized) {

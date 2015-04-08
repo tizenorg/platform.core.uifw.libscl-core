@@ -198,6 +198,13 @@ void CSCLCore::update_preedit_string(sclint ic, const sclchar *ic_uuid, const sc
     }
 }
 
+void CSCLCore::update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs)
+{
+    if (m_impl) {
+        m_impl->update_preedit_string(ic, ic_uuid, str, attrs);
+    }
+}
+
 void CSCLCore::update_aux_string(const sclchar *str)
 {
     if (m_impl) {

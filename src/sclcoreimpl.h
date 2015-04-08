@@ -73,8 +73,8 @@ public:
     void hide_aux_string(void);
     void hide_candidate_string(void);
     void hide_associate_string(void);
-    /*void update_preedit_string (int ic, const sclchar *ic_uuid, const sclchar *str, const AttributeList &attrs) const;*/
     void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
+    void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs);
     //void update_aux_string (const sclchar *str, const AttributeList &attrs) const;
     void update_aux_string(const sclchar *str);
     //void update_candidate_string (const LookupTable &table) const;

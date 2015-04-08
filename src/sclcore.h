@@ -20,8 +20,10 @@
 
 //SCL_BEGIN_DECLS
 
-#include <string>
+#define Uses_SCIM_ATTRIBUTE
 
+#include <string>
+#include <scim.h>
 #include <sclcommon.h>
 #include "sclcoretypes.h"
 #include "sclcorecallback.h"
@@ -176,7 +178,18 @@ public:
     void hide_associate_string(void);
 
     /**
-     * @brief Update a new WideString for preedit.
+     * @brief Update a new string for preedit.
+     *
+     * @param[in] ic The handle of the client Input Context to receive the WideString.
+     *            -1 means the currently focused Input Context.
+     * @param[in] ic_uuid The UUID of the IMEngine used by the Input Context.
+     *            NULL means don't match.
+     * @param[in] str The UTF-8 string to be updated.
+     */
+    void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
+
+    /**
+     * @brief Update a new string for preedit.
      *
      * @param[in] ic The handle of the client Input Context to receive the WideString.
      *            -1 means the currently focused Input Context.
@@ -185,8 +198,7 @@ public:
      * @param[in] str The UTF-8 string to be updated.
      * @param[in] attrs The attribute list for preedit string.
      */
-    /*void update_preedit_string (int ic, const sclchar *ic_uuid, const sclchar *str, const AttributeList &attrs) const;*/
-    void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
+    void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs);
 
     /**
      * @brief Update a new string for aux.

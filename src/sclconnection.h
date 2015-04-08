@@ -18,7 +18,10 @@
 #ifndef __SCL_CONNECTION_H__
 #define __SCL_CONNECTION_H__
 
+#define Uses_SCIM_ATTRIBUTE
+
 #include <string>
+#include <scim.h>
 #include "scltypes.h"
 //SCL_BEGIN_DECLS
 
@@ -66,6 +69,7 @@ public:
     virtual void hide_candidate_string(void);
     virtual void hide_associate_string(void);
     virtual void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str);
+    virtual void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs);
     virtual void update_aux_string(const sclchar *str);
     virtual void update_input_context(sclu32 type, sclu32 value);
     virtual void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;

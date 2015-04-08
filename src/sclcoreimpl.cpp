@@ -200,6 +200,11 @@ void CSCLCoreImpl::update_preedit_string(sclint ic, const sclchar *ic_uuid, cons
     m_connection.update_preedit_string(ic, ic_uuid, str);
 }
 
+void CSCLCoreImpl::update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs)
+{
+    m_connection.update_preedit_string(ic, ic_uuid, str, attrs);
+}
+
 void CSCLCoreImpl::update_aux_string(const sclchar *str)
 {
     m_connection.update_aux_string(str);
