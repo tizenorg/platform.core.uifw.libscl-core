@@ -543,9 +543,7 @@ CSCLConnectionISF::~CSCLConnectionISF()
 
 sclboolean CSCLConnectionISF::init()
 {
-    sclboolean ret = FALSE;
-
-    m_initialized = TRUE;
+    LOGD ("Enter");
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -555,54 +553,58 @@ sclboolean CSCLConnectionISF::init()
         }
     }
 
-    m_helper_agent.signal_connect_exit (scim::slot (slot_exit));
-    m_helper_agent.signal_connect_attach_input_context (scim::slot (slot_attach_input_context));
-    m_helper_agent.signal_connect_detach_input_context (scim::slot (slot_detach_input_context));
-    m_helper_agent.signal_connect_reload_config (scim::slot (slot_reload_config));
-    m_helper_agent.signal_connect_update_screen (scim::slot (slot_update_screen));
-    m_helper_agent.signal_connect_update_spot_location (scim::slot (slot_update_spot_location));
-    m_helper_agent.signal_connect_update_cursor_position (scim::slot (slot_update_cursor_position));
-    m_helper_agent.signal_connect_update_surrounding_text (scim::slot (slot_update_surrounding_text));
-    m_helper_agent.signal_connect_trigger_property (scim::slot (slot_trigger_property));
-    //m_helper_agent.signal_connect_process_imengine_event (slot (slot_process_imengine_event));
-    m_helper_agent.signal_connect_focus_out (scim::slot (slot_focus_out));
-    m_helper_agent.signal_connect_focus_in (scim::slot (slot_focus_in));
-    m_helper_agent.signal_connect_ise_show (scim::slot (slot_ise_show));
-    m_helper_agent.signal_connect_ise_hide (scim::slot (slot_ise_hide));
-    m_helper_agent.signal_connect_get_geometry (scim::slot (slot_get_geometry));
-    m_helper_agent.signal_connect_set_mode (scim::slot (slot_set_mode));
-    m_helper_agent.signal_connect_set_language (scim::slot (slot_set_language));
-    m_helper_agent.signal_connect_set_imdata (scim::slot (slot_set_imdata));
-    m_helper_agent.signal_connect_get_imdata (scim::slot (slot_get_imdata));
-    m_helper_agent.signal_connect_get_language_locale (scim::slot (slot_get_language_locale));
-    m_helper_agent.signal_connect_set_return_key_type (scim::slot (slot_set_return_key_type));
-    m_helper_agent.signal_connect_get_return_key_type (scim::slot (slot_get_return_key_type));
-    m_helper_agent.signal_connect_set_return_key_disable (scim::slot (slot_set_return_key_disable));
-    m_helper_agent.signal_connect_get_return_key_disable (scim::slot (slot_get_return_key_disable));
-    m_helper_agent.signal_connect_get_layout (scim::slot (slot_get_layout));
-    m_helper_agent.signal_connect_set_layout (scim::slot (slot_set_layout));
-    m_helper_agent.signal_connect_set_caps_mode (scim::slot (slot_set_caps_mode));
-    m_helper_agent.signal_connect_reset_input_context (scim::slot (slot_reset_input_context));
-    m_helper_agent.signal_connect_update_candidate_geometry (scim::slot (slot_update_candidate_geometry));
-    m_helper_agent.signal_connect_update_keyboard_ise (scim::slot (slot_update_keyboard_ise));
-    //m_helper_agent.signal_connect_update_keyboard_ise_list (slot (slot_update_keyboard_ise_list));
-    m_helper_agent.signal_connect_candidate_more_window_show (scim::slot (slot_candidate_more_window_show));
-    m_helper_agent.signal_connect_candidate_more_window_hide (scim::slot (slot_candidate_more_window_hide));
-    m_helper_agent.signal_connect_select_aux (scim::slot (slot_select_aux));
-    m_helper_agent.signal_connect_select_candidate (scim::slot (slot_select_candidate));
-    m_helper_agent.signal_connect_candidate_table_page_up (scim::slot (slot_candidate_table_page_up));
-    m_helper_agent.signal_connect_candidate_table_page_down (scim::slot (slot_candidate_table_page_down));
-    m_helper_agent.signal_connect_update_candidate_table_page_size (scim::slot (slot_update_candidate_table_page_size));
-    m_helper_agent.signal_connect_update_lookup_table (scim::slot (slot_update_lookup_table));
-    m_helper_agent.signal_connect_select_associate (scim::slot (slot_select_associate));
-    m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
-    m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
-    m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
-    m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
-    m_helper_agent.signal_connect_check_option_window (scim::slot (slot_check_ise_option_window));
-    m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
+    if (!m_initialized) {
+        m_helper_agent.signal_connect_exit (scim::slot (slot_exit));
+        m_helper_agent.signal_connect_attach_input_context (scim::slot (slot_attach_input_context));
+        m_helper_agent.signal_connect_detach_input_context (scim::slot (slot_detach_input_context));
+        m_helper_agent.signal_connect_reload_config (scim::slot (slot_reload_config));
+        m_helper_agent.signal_connect_update_screen (scim::slot (slot_update_screen));
+        m_helper_agent.signal_connect_update_spot_location (scim::slot (slot_update_spot_location));
+        m_helper_agent.signal_connect_update_cursor_position (scim::slot (slot_update_cursor_position));
+        m_helper_agent.signal_connect_update_surrounding_text (scim::slot (slot_update_surrounding_text));
+        m_helper_agent.signal_connect_trigger_property (scim::slot (slot_trigger_property));
+        //m_helper_agent.signal_connect_process_imengine_event (slot (slot_process_imengine_event));
+        m_helper_agent.signal_connect_focus_out (scim::slot (slot_focus_out));
+        m_helper_agent.signal_connect_focus_in (scim::slot (slot_focus_in));
+        m_helper_agent.signal_connect_ise_show (scim::slot (slot_ise_show));
+        m_helper_agent.signal_connect_ise_hide (scim::slot (slot_ise_hide));
+        m_helper_agent.signal_connect_get_geometry (scim::slot (slot_get_geometry));
+        m_helper_agent.signal_connect_set_mode (scim::slot (slot_set_mode));
+        m_helper_agent.signal_connect_set_language (scim::slot (slot_set_language));
+        m_helper_agent.signal_connect_set_imdata (scim::slot (slot_set_imdata));
+        m_helper_agent.signal_connect_get_imdata (scim::slot (slot_get_imdata));
+        m_helper_agent.signal_connect_get_language_locale (scim::slot (slot_get_language_locale));
+        m_helper_agent.signal_connect_set_return_key_type (scim::slot (slot_set_return_key_type));
+        m_helper_agent.signal_connect_get_return_key_type (scim::slot (slot_get_return_key_type));
+        m_helper_agent.signal_connect_set_return_key_disable (scim::slot (slot_set_return_key_disable));
+        m_helper_agent.signal_connect_get_return_key_disable (scim::slot (slot_get_return_key_disable));
+        m_helper_agent.signal_connect_get_layout (scim::slot (slot_get_layout));
+        m_helper_agent.signal_connect_set_layout (scim::slot (slot_set_layout));
+        m_helper_agent.signal_connect_set_caps_mode (scim::slot (slot_set_caps_mode));
+        m_helper_agent.signal_connect_reset_input_context (scim::slot (slot_reset_input_context));
+        m_helper_agent.signal_connect_update_candidate_geometry (scim::slot (slot_update_candidate_geometry));
+        m_helper_agent.signal_connect_update_keyboard_ise (scim::slot (slot_update_keyboard_ise));
+        //m_helper_agent.signal_connect_update_keyboard_ise_list (slot (slot_update_keyboard_ise_list));
+        m_helper_agent.signal_connect_candidate_more_window_show (scim::slot (slot_candidate_more_window_show));
+        m_helper_agent.signal_connect_candidate_more_window_hide (scim::slot (slot_candidate_more_window_hide));
+        m_helper_agent.signal_connect_select_aux (scim::slot (slot_select_aux));
+        m_helper_agent.signal_connect_select_candidate (scim::slot (slot_select_candidate));
+        m_helper_agent.signal_connect_candidate_table_page_up (scim::slot (slot_candidate_table_page_up));
+        m_helper_agent.signal_connect_candidate_table_page_down (scim::slot (slot_candidate_table_page_down));
+        m_helper_agent.signal_connect_update_candidate_table_page_size (scim::slot (slot_update_candidate_table_page_size));
+        m_helper_agent.signal_connect_update_lookup_table (scim::slot (slot_update_lookup_table));
+        m_helper_agent.signal_connect_select_associate (scim::slot (slot_select_associate));
+        m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
+        m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
+        m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
+        m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
+        m_helper_agent.signal_connect_check_option_window (scim::slot (slot_check_ise_option_window));
+        m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
 
-    return ret;
+        m_initialized = TRUE;
+    }
+
+    return TRUE;
 }
 
 void CSCLConnectionISF::fini()
