@@ -286,6 +286,8 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         elm_win_autodel_set(main_window, EINA_TRUE);
         elm_win_title_set(main_window, uuid);
         elm_win_prop_focus_skip_set(main_window, EINA_TRUE);
+        int rots[] = { 0, 90, 180, 270 };
+        elm_win_wm_rotation_available_rotations_set(main_window, rots, (sizeof(rots) / sizeof(int)));
 
         unsigned int set = 1;
         ecore_x_window_prop_card32_set(elm_win_xwindow_get(main_window),
