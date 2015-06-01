@@ -454,9 +454,6 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 
     Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
 
-    const char *szProfile[] = {"mobile", ""};
-    elm_win_profiles_set(window, szProfile, 1);
-
     elm_win_borderless_set(window, EINA_TRUE);
 
     Evas_Coord win_w = 0, win_h = 0;
