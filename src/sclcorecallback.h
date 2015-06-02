@@ -43,7 +43,7 @@ struct ISCLCoreEventCallback {
     virtual void on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor) {}
     virtual void on_focus_out(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_focus_in(sclint ic, const sclchar *ic_uuid) {}
-    virtual void on_ise_show(sclint ic, const int degree, Ise_Context context) {}
+    virtual void on_ise_show(sclint ic, const int degree, Ise_Context &context) {}
     virtual void on_ise_hide(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_get_geometry(sclu32 *pos_x, sclu32 *pos_y, sclu32 *width, sclu32 *height) {}
     virtual void on_set_mode(sclu32 mode) {}
