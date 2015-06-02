@@ -5,8 +5,8 @@ Name:       libscl-core
 Summary:    A library for developing software keyboards
 Version:    0.0.1
 Release:    1
-Group:      System Environment/Libraries
-License:    Apache License, Version 2.0
+Group:      Graphics & UI Framework/Input
+License:    Apache-2.0
 Source0:    libscl-core-%{version}.tar.gz
 BuildRequires:  gettext-tools
 BuildRequires:  cmake
