@@ -27,7 +27,7 @@ Group:      Development/Libraries
 Requires:   %{name} = %{version}-%{release}
 
 %description devel
-A devel pacakge of libscl-core library that helps developing S/W Keyboard
+A devel package of libscl-core library that helps developing S/W Keyboard
 
 %prep
 %setup -q
