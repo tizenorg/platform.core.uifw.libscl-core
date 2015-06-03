@@ -36,7 +36,7 @@ class CSCLCoreUI
 {
 public:
     CSCLCoreUI();
-    ~CSCLCoreUI();
+    virtual ~CSCLCoreUI();
 
     std::string get_backend_indentifier();
 
