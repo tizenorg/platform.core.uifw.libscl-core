@@ -30,7 +30,7 @@ pkg_check_modules(pkgs REQUIRED
         dlog
         isf
         vconf
-        x11
+        ecore-x
         libscl-common
         )
 

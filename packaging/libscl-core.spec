@@ -14,7 +14,7 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(isf)
-BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(ecore-x)
 BuildRequires:  pkgconfig(libscl-common)
 
 
