@@ -37,7 +37,7 @@ class CSCLConnection
 {
 public:
     CSCLConnection();
-    ~CSCLConnection();
+    virtual ~CSCLConnection();
 
     std::string get_backend_indentifier();
 
