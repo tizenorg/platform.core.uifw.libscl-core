@@ -457,7 +457,7 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
     elm_win_borderless_set(window, EINA_TRUE);
 
     Evas_Coord win_w = 0, win_h = 0;
-    ecore_x_window_size_get(ecore_x_window_root_first_get(), &win_w, &win_h);
+    elm_win_screen_size_get (window, NULL, NULL, &win_w, &win_h);
     int degree = get_screen_rotation_degree();
     if(degree == 90 || degree == 270){
         evas_object_resize(window, win_h, win_w);
