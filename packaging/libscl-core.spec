@@ -1,3 +1,6 @@
+%bcond_with x
+%bcond_with wayland
+
 %define _optdir /opt
 %define _appdir %{_optdir}/apps
 
@@ -14,7 +17,10 @@ BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(isf)
+%if %{with wayland}
+%else
 BuildRequires:  pkgconfig(ecore-x)
+%endif
 BuildRequires:  pkgconfig(libscl-common)
 
 
@@ -40,7 +46,12 @@ export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 
 rm -rf CMakeFiles
 rm -rf CMakeCache.txt
+
+%if %{with wayland}
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -Dwith_wayland=TRUE
+%else
 cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}
+%endif
 make %{?jobs:-j%jobs}
 
 %install

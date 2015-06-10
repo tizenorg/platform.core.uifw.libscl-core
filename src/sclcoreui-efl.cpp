@@ -24,8 +24,12 @@
 #include <vconf-keys.h>
 
 #include <glib.h>
+#ifdef WAYLAND
+#include <Ecore_Wayland.h>
+#else
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
+#endif
 
 
 using namespace scl;
@@ -74,10 +78,15 @@ sclwindow CSCLCoreUIEFL::get_main_window()
 void CSCLCoreUIEFL::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
     Evas_Object *main_window = NATIVE_WINDOW_CAST(m_main_window);
+
+#ifdef WAYLAND
+    evas_object_resize(main_window, portrait.width, portrait.height);
+#else
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window),   0, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window),  90, 0, 0, landscape.height, landscape.width);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window), 180, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window), 270, 0, 0, landscape.height, landscape.width);
+#endif
 }
 
 const char * extract_themename_from_theme_file_path(const char *filepath) {
@@ -145,6 +154,7 @@ void accessibility_changed_cb(keynode_t *key, void* data)
     }
 }
 
+#ifndef WAYLAND
 static Eina_Bool _client_message_cb(void *data, int type, void *event)
 {
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
@@ -197,10 +207,13 @@ static Eina_Bool _client_message_cb(void *data, int type, void *event)
 
     return ECORE_CALLBACK_RENEW;
 }
+#endif
 
 int CSCLCoreUIEFL::get_screen_rotation_degree()
 {
     int angle = 0;
+
+#ifndef WAYLAND
     if (m_rotation_degree == -1) {
         int  ret = 0;
         Atom type_return;
@@ -250,6 +263,7 @@ int CSCLCoreUIEFL::get_screen_rotation_degree()
     } else {
         angle = m_rotation_degree;
     }
+#endif
 
     return angle;
 }
@@ -289,12 +303,14 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         int rots[] = { 0, 90, 180, 270 };
         elm_win_wm_rotation_available_rotations_set(main_window, rots, (sizeof(rots) / sizeof(int)));
 
+#ifndef WAYLAND
         unsigned int set = 1;
         ecore_x_window_prop_card32_set(elm_win_xwindow_get(main_window),
             ECORE_X_ATOM_E_WINDOW_ROTATION_SUPPORTED,
             &set, 1);
 
         ecore_x_icccm_name_class_set(elm_win_xwindow_get(main_window), "Virtual Keyboard", "ISF");
+#endif
 
         vconf_notify_key_changed(VCONFKEY_LANGSET, language_changed_cb, NULL);
         vconf_notify_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb, NULL);
@@ -305,8 +321,10 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         impl->init(display);
 
+#ifndef WAYLAND
         Ecore_Event_Handler *XClientMsgHandler =
             ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, this);
+#endif
 
         signal(SIGQUIT, signal_handler);
         signal(SIGTERM, signal_handler);
@@ -320,10 +338,12 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         vconf_ignore_key_changed(VCONFKEY_LANGSET, language_changed_cb);
         vconf_ignore_key_changed(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, accessibility_changed_cb);
 
+#ifndef WAYLAND
         if (XClientMsgHandler) {
             ecore_event_handler_del(XClientMsgHandler);
             XClientMsgHandler = NULL;
         }
+#endif
 
         elm_shutdown();
     }
@@ -360,6 +380,7 @@ set_transient_for_app_window(Evas_Object *window)
 {
     /* Set a transient window for window stack */
     /* Gets the current XID of the active window into the root window property  */
+#ifndef WAYLAND
     Atom type_return;
     unsigned long nitems_return;
     unsigned long bytes_after_return;
@@ -385,6 +406,7 @@ set_transient_for_app_window(Evas_Object *window)
             XFree(data);
         }
     }
+#endif
 }
 
 static void
@@ -392,6 +414,7 @@ set_transient_for_isf_setting_window(Evas_Object *window)
 {
     /* Set a transient window for window stack */
     /* Gets the current XID of the active window into the root window property  */
+#ifndef WAYLAND
     Atom type_return;
     unsigned long nitems_return;
     unsigned long bytes_after_return;
@@ -421,6 +444,7 @@ set_transient_for_isf_setting_window(Evas_Object *window)
             XFree(data);
         }
     }
+#endif
 }
 
 sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
@@ -476,7 +500,11 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 
     Ecore_Event_Handler *handler = NULL;
     if (type == OPTION_WINDOW_TYPE_NORMAL) {
+#ifdef WAYLAND
+        handler = ecore_event_handler_add(ECORE_WL_EVENT_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
+#else
         handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
+#endif
         set_transient_for_app_window(window);
     } else if (type == OPTION_WINDOW_TYPE_SETTING_APPLICATION) {
         set_transient_for_isf_setting_window(window);

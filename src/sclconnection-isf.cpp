@@ -625,6 +625,7 @@ void CSCLConnectionISF::open_connection(const sclchar *display)
             if (impl) {
                 main_window = NATIVE_WINDOW_CAST(impl->get_main_window());
             }
+#ifndef WAYLAND
             Ecore_X_Window xwindow = elm_win_xwindow_get(main_window);
             char xid[255];
             snprintf(xid, 255, "%d", xwindow);
@@ -632,6 +633,7 @@ void CSCLConnectionISF::open_connection(const sclchar *display)
             scim::PropertyList props;
             props.push_back(prop);
             m_helper_agent.register_properties(props);
+#endif
 
             m_fd_handler = ecore_main_fd_handler_add(fd, ECORE_FD_READ, input_handler, &m_helper_agent, NULL, NULL);
         }

@@ -25,14 +25,22 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src
                    )
 
 INCLUDE(FindPkgConfig)
-pkg_check_modules(pkgs REQUIRED
+
+SET(PKGS_CHECK_MODULES
         elementary
         dlog
         isf
         vconf
-        ecore-x
+
         libscl-common
         )
+
+IF (with_wayland)
+        ADD_DEFINITIONS("-DWAYLAND")
+        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES})
+ELSE (with_wayland)
+        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-x)
+ENDIF(with_wayland)
 
 FOREACH(flag ${pkgs_CFLAGS})
     SET(EXTRA_CFLAGS "${EXTRA_CFLAGS} ${flag}")
