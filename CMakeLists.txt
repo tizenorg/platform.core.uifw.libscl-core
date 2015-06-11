@@ -31,7 +31,6 @@ SET(PKGS_CHECK_MODULES
         dlog
         isf
         vconf
-
         libscl-common
         )
 

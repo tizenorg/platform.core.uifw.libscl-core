@@ -27,6 +27,7 @@
 #ifdef WAYLAND
 #include <Ecore_Wayland.h>
 #else
+#include <Ecore_X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #endif

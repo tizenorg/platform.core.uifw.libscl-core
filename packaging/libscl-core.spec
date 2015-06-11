@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(isf)
 %if %{with wayland}
 %else
 BuildRequires:  pkgconfig(ecore-x)
+BuildRequires:  pkgconfig(x11)
 %endif
 BuildRequires:  pkgconfig(libscl-common)
 
