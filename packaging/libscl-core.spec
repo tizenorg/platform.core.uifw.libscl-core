@@ -48,9 +48,9 @@ rm -rf CMakeFiles
 rm -rf CMakeCache.txt
 
 %if %{with wayland}
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -Dwith_wayland=TRUE
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir} -Dwith_wayland=TRUE
 %else
-cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix}
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DLIB_INSTALL_DIR:PATH=%{_libdir}
 %endif
 make %{?jobs:-j%jobs}
 
