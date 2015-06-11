@@ -211,7 +211,8 @@ static void slot_set_imdata (const scim::HelperAgent *agent, char *buf, size_t &
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            callback->on_set_imdata(buf, len);
+            scl32 _len = static_cast<scl32>(reinterpret_cast<size_t>(len) & 0xffffffff);
+            callback->on_set_imdata(buf, _len);
         }
     }
 }
@@ -221,7 +222,9 @@ static void slot_get_imdata (const scim::HelperAgent *, char **buf, size_t &len)
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            callback->on_get_imdata(buf, &len);
+            sclu32 _len = 0;
+            callback->get_imdata(buf, &_len);
+            len = _len;
         }
     }
 }
