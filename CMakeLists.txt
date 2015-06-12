@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-PROJECT(libscl-core CXX)
+PROJECT(libscl-core)
 
 SET(SRCS
     src/sclcoreui.cpp
@@ -9,6 +9,12 @@ SET(SRCS
     src/sclconnection-isf.cpp
     src/sclcore.cpp
 )
+
+IF (with_wayland)
+    SET(SRCS ${SRCS} src/input-method-protocol.c)
+ELSE (with_wayland)
+    SET(SRCS ${SRCS})
+ENDIF (with_wayland)
 
 SET(PACKAGE ${PROJECT_NAME})
 SET(PKGNAME ${PACKAGE})
@@ -36,7 +42,7 @@ SET(PKGS_CHECK_MODULES
 
 IF (with_wayland)
         ADD_DEFINITIONS("-DWAYLAND")
-        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES})
+        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
 ELSE (with_wayland)
         pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-x)
 ENDIF(with_wayland)

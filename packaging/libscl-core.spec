@@ -18,6 +18,8 @@ BuildRequires:  pkgconfig(vconf)
 BuildRequires:  pkgconfig(dlog)
 BuildRequires:  pkgconfig(isf)
 %if %{with wayland}
+BuildRequires:  pkgconfig(ecore-wayland)
+BuildRequires:  pkgconfig(wayland-client)
 %else
 BuildRequires:  pkgconfig(ecore-x)
 BuildRequires:  pkgconfig(x11)
