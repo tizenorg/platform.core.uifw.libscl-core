@@ -26,12 +26,27 @@
 #include <glib.h>
 #ifdef WAYLAND
 #include <Ecore_Wayland.h>
+#include "input-method-client-protocol.h"
 #else
 #include <Ecore_X.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #endif
 
+#ifdef WAYLAND
+struct WaylandKeyboard
+{
+    Ecore_Evas *ee;
+    Ecore_Wl_Window *wl_win;
+    const char *ee_engine;
+
+    struct wl_surface *surface;
+    struct wl_input_panel *ip;
+    struct wl_output *output;
+};
+
+struct WaylandKeyboard wlkb = {0};
+#endif
 
 using namespace scl;
 
@@ -273,6 +288,100 @@ void signal_handler(int sig) {
     elm_exit();
 }
 
+#ifdef WAYLAND
+static bool
+_wayland_setup(struct WaylandKeyboard *wlkb, Evas_Object *main_window)
+{
+    Eina_Inlist *globals;
+    struct wl_registry *registry;
+    Ecore_Wl_Global *global;
+    struct wl_input_panel_surface *ips;
+
+    if (!(registry = ecore_wl_registry_get()))
+        return false;
+
+    if (!(globals = ecore_wl_globals_get()))
+        return false;
+
+    EINA_INLIST_FOREACH(globals, global)
+    {
+        if (strcmp(global->interface, "wl_input_panel") == 0)
+            wlkb->ip = (wl_input_panel *)wl_registry_bind(registry, global->id, &wl_input_panel_interface, 1);
+        else if (strcmp(global->interface, "wl_output") == 0)
+            wlkb->output = (wl_output *)wl_registry_bind(registry, global->id, &wl_output_interface, 1);
+    }
+
+    if (!wlkb->ip) {
+        LOGW ("Can't get wayland input panel interface\n");
+        return false;
+    }
+
+    if (!wlkb->output) {
+        LOGW ("Can't get wayland output interface\n");
+        return false;
+    }
+
+    wlkb->ee = ecore_evas_ecore_evas_get(evas_object_evas_get(main_window));
+    if (!wlkb->ee) {
+        LOGW ("ERROR: Unable to create Ecore_Evas object");
+        return false;
+    }
+
+    /* Set input panel surface */
+    LOGD ("Setting up input panel\n");
+    wlkb->wl_win = ecore_evas_wayland_window_get(wlkb->ee);
+    if (!wlkb->wl_win) {
+        LOGW ("Couldn't get wayland window\n");
+        return false;
+    }
+
+    ecore_wl_window_type_set(wlkb->wl_win, ECORE_WL_WINDOW_TYPE_NONE);
+    wlkb->surface = ecore_wl_window_surface_create(wlkb->wl_win);
+    if (!wlkb->surface) {
+        LOGW ("Couldn't create surface\n");
+        return false;
+    }
+
+    ips = wl_input_panel_get_input_panel_surface(wlkb->ip, wlkb->surface);
+    if (!ips) {
+        LOGW ("Couldn't get input panel surface\n");
+        return false;
+    }
+
+    wl_input_panel_surface_set_toplevel(ips, wlkb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
+
+    return true;
+}
+
+static Eina_Bool
+check_evas_engine(struct WaylandKeyboard *wlkb)
+{
+    Eina_Bool ret = EINA_FALSE;
+    char *env = getenv("ECORE_EVAS_ENGINE");
+
+    if (!env) {
+        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM))
+            env = "wayland_shm";
+        else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL))
+            env = "wayland_egl";
+        else {
+            LOGW ("ERROR: Ecore_Evas does must be compiled with support for Wayland engines\n");
+            goto err;
+        }
+    }
+    else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0) {
+        LOGW ("ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'\n");
+        goto err;
+    }
+
+    wlkb->ee_engine = env;
+    ret = EINA_TRUE;
+
+err:
+    return ret;
+}
+#endif
+
 void CSCLCoreUIEFL::run(const sclchar *display)
 {
     char *argv[4];
@@ -291,10 +400,32 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         elm_init(argc, argv);
 
+#ifdef WAYLAND
+        if (!check_evas_engine(&wlkb)) {
+            LOGW ("_wlkb_check_evas_engine error!\n");
+            elm_shutdown ();
+            return;
+        }
+        LOGD ("Selected engine: '%s'\n", wlkb.ee_engine);
+#endif
+
         elm_policy_set(ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
         Evas_Object *main_window = elm_win_add(NULL, uuid, ELM_WIN_UTILITY);
+        if (!main_window) {
+            LOGE("Failed to create main window\n");
+            return;
+        }
+
         m_main_window = SCL_WINDOW_CAST(main_window);
+
+#ifdef WAYLAND
+        if (!_wayland_setup(&wlkb, main_window)) {
+            LOGW ("ERROR: Unable to setup input panel.\n");
+            elm_shutdown();
+            return;
+        }
+#endif
 
         elm_win_borderless_set(main_window, EINA_TRUE);
         elm_win_keyboard_win_set(main_window, EINA_TRUE);
@@ -331,6 +462,8 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         signal(SIGTERM, signal_handler);
         signal(SIGINT,  signal_handler);
         signal(SIGHUP,  signal_handler);
+
+        evas_object_show(main_window);
 
         elm_run();
 
