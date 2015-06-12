@@ -621,12 +621,13 @@ void CSCLConnectionISF::open_connection(const sclchar *display)
         int fd = m_helper_agent.get_connection_number();
 
         if (fd >= 0) {
+#ifndef WAYLAND
             Evas_Object *main_window = NULL;
             CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
             if (impl) {
                 main_window = NATIVE_WINDOW_CAST(impl->get_main_window());
             }
-#ifndef WAYLAND
+
             Ecore_X_Window xwindow = elm_win_xwindow_get(main_window);
             char xid[255];
             snprintf(xid, 255, "%d", xwindow);
