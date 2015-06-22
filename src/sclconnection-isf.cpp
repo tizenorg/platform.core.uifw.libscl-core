@@ -597,6 +597,8 @@ sclboolean CSCLConnectionISF::init()
         m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
         m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
         m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
+        m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
+        m_helper_agent.signal_connect_check_option_window (scim::slot (slot_check_ise_option_window));
         m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
 
         m_initialized = TRUE;
