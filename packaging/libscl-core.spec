@@ -6,7 +6,7 @@
 
 Name:       libscl-core
 Summary:    A library for developing software keyboards
-Version:    0.4.1
+Version:    0.4.2
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    Apache-2.0
