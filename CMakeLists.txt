@@ -44,7 +44,7 @@ IF (with_wayland)
         ADD_DEFINITIONS("-DWAYLAND")
         pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
 ELSE (with_wayland)
-        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-x)
+        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-x x11)
 ENDIF(with_wayland)
 
 FOREACH(flag ${pkgs_CFLAGS})
