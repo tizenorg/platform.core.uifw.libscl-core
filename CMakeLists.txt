@@ -10,12 +10,6 @@ SET(SRCS
     src/sclcore.cpp
 )
 
-IF (with_wayland)
-    SET(SRCS ${SRCS} src/input-method-protocol.c)
-ELSE (with_wayland)
-    SET(SRCS ${SRCS})
-ENDIF (with_wayland)
-
 SET(PACKAGE ${PROJECT_NAME})
 SET(PKGNAME ${PACKAGE})
 SET(PREFIX ${CMAKE_INSTALL_PREFIX})
@@ -42,7 +36,7 @@ SET(PKGS_CHECK_MODULES
 
 IF (with_wayland)
         ADD_DEFINITIONS("-DWAYLAND")
-        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client)
+        pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-wayland wayland-client input-method-client)
 ELSE (with_wayland)
         pkg_check_modules(pkgs REQUIRED ${PKGS_CHECK_MODULES} ecore-x x11)
 ENDIF(with_wayland)

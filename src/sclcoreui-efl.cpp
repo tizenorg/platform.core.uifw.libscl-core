@@ -26,7 +26,7 @@
 #include <glib.h>
 #ifdef WAYLAND
 #include <Ecore_Wayland.h>
-#include "input-method-client-protocol.h"
+#include <input-method-client-protocol.h>
 #else
 #include <Ecore_X.h>
 #include <X11/Xlib.h>

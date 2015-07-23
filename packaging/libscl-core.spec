@@ -20,6 +20,7 @@ BuildRequires:  pkgconfig(isf)
 %if %{with wayland}
 BuildRequires:  pkgconfig(ecore-wayland)
 BuildRequires:  pkgconfig(wayland-client)
+BuildRequires:  pkgconfig(input-method-client)
 %else
 BuildRequires:  pkgconfig(ecore-x)
 BuildRequires:  pkgconfig(x11)
