@@ -298,3 +298,10 @@ void CSCLConnection::update_geometry(int x, int y, int width, int height)
         m_impl->update_geometry(x, y, width, height);
     }
 }
+
+void CSCLConnection::set_selection(sclint start, sclint end)
+{
+    if (m_impl) {
+        m_impl->set_selection(start, end);
+    }
+}

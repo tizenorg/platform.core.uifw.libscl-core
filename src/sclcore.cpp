@@ -292,3 +292,10 @@ void CSCLCore::destroy_option_window(sclwindow window)
         m_impl->destroy_option_window(window);
     }
 }
+
+void CSCLCore::set_selection(sclint start, sclint end)
+{
+    if (m_impl) {
+        m_impl->set_selection(start, end);
+    }
+}
