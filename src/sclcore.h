@@ -310,6 +310,14 @@ public:
      */
     void destroy_option_window(sclwindow window);
 
+    /**
+     * @ brief Request to select text.
+     *
+     * @param[in] start The start cursor position in text.
+     * @param[in] end The end cursor position in text.
+     */
+    void set_selection(sclint start, sclint end);
+
 private:
     CSCLCoreImpl *m_impl;
 };

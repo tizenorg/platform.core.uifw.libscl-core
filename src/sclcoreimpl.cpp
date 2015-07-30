@@ -304,3 +304,8 @@ void CSCLCoreImpl::destroy_option_window(sclwindow window)
 {
     m_core_ui.destroy_option_window(window);
 }
+
+void CSCLCoreImpl::set_selection(sclint start, sclint end)
+{
+    m_connection.set_selection(start, end);
+}

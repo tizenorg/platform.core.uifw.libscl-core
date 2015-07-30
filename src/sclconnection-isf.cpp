@@ -934,6 +934,13 @@ void CSCLConnectionISF::get_keyboard_ise(const sclchar *uuid)
     }
 }
 
+void CSCLConnectionISF::set_selection(sclint start, sclint end)
+{
+    if (m_initialized) {
+       m_helper_agent.set_selection(start, end);
+    }
+}
+
 void CSCLConnectionISF::update_geometry(int x, int y, int width, int height)
 {
     if (m_initialized) {

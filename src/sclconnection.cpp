@@ -292,9 +292,17 @@ void CSCLConnection::get_keyboard_ise(const sclchar *uuid)
     }
 }
 
+void CSCLConnection::set_selection(sclint start, sclint end)
+{
+    if (m_impl) {
+        m_impl->set_selection(start, end);
+    }
+}
+
 void CSCLConnection::update_geometry(int x, int y, int width, int height)
 {
     if (m_impl) {
         m_impl->update_geometry(x, y, width, height);
     }
 }
+
