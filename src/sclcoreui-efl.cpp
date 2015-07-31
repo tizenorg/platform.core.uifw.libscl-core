@@ -464,7 +464,9 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         signal(SIGINT,  signal_handler);
         signal(SIGHUP,  signal_handler);
 
+#ifdef WAYLAND
         evas_object_show(main_window);
+#endif
 
         elm_run();
 
