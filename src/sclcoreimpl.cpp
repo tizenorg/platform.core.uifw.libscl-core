@@ -125,6 +125,11 @@ sclboolean CSCLCoreImpl::config_erase(const sclchar *name)
     return m_connection.config_erase(name);
 }
 
+sclboolean CSCLCoreImpl::config_flush(void)
+{
+    return m_connection.config_flush();
+}
+
 void CSCLCoreImpl::send_imengine_event(sclint ic, const sclchar *ic_uuid, const sclint command, const sclu32 value)
 {
     m_connection.send_imengine_event(ic, ic_uuid, command, value);

@@ -667,6 +667,7 @@ sclboolean CSCLConnectionISF::config_read_int(const sclchar *name, sclint &value
     sclboolean ret = FALSE;
     if (m_initialized && _scim_config) {
         value = _scim_config->read(name, value);
+        ret = TRUE;
     }
     return ret;
 }
@@ -676,6 +677,7 @@ sclboolean CSCLConnectionISF::config_read_string(const sclchar *name, std::strin
     sclboolean ret = FALSE;
     if (m_initialized && _scim_config) {
         value = _scim_config->read(name, value);
+        ret = TRUE;
     }
     return ret;
 }
@@ -685,6 +687,7 @@ sclboolean CSCLConnectionISF::config_write_int(const sclchar *name, sclint value
     sclboolean ret = FALSE;
     if (m_initialized && _scim_config) {
         _scim_config->write(name, value);
+        ret = TRUE;
     }
     return ret;
 }
@@ -694,6 +697,7 @@ sclboolean CSCLConnectionISF::config_write_string(const sclchar *name, const std
     sclboolean ret = FALSE;
     if (m_initialized && _scim_config) {
         _scim_config->write(name, value);
+        ret = TRUE;
     }
     return ret;
 }
@@ -703,6 +707,17 @@ sclboolean CSCLConnectionISF::config_erase(const sclchar *name)
     sclboolean ret = FALSE;
     if (m_initialized && _scim_config) {
         _scim_config->erase(name);
+        ret = TRUE;
+    }
+    return ret;
+}
+
+sclboolean CSCLConnectionISF::config_flush(void)
+{
+    sclboolean ret = FALSE;
+    if (m_initialized && _scim_config) {
+        _scim_config->flush();
+        ret = TRUE;
     }
     return ret;
 }

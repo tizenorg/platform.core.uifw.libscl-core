@@ -53,6 +53,7 @@ public:
     virtual sclboolean config_write_int(const sclchar *name, sclint value);
     virtual sclboolean config_write_string(const sclchar *name, const std::string value);
     virtual sclboolean config_erase(const sclchar *name);
+    virtual sclboolean config_flush(void);
 
     virtual void send_imengine_event(sclint ic, const sclchar *ic_uuid, const sclint command, const sclu32 value);
     virtual void reset_keyboard_ise();

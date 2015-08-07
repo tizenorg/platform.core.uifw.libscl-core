@@ -78,6 +78,11 @@ public:
     sclboolean config_erase(const sclchar *name);
 
     /**
+     * @brief Request ISF to permanently writes all changes.
+     */
+    sclboolean config_flush(void);
+
+    /**
      * @brief Send an Event to IMEngine
      *
      * @param[in] ic The handle of the IMEngineInstance to receive the event.

@@ -124,6 +124,15 @@ sclboolean CSCLConnection::config_erase(const sclchar *name)
     return ret;
 }
 
+sclboolean CSCLConnection::config_flush(void)
+{
+    sclboolean ret = FALSE;
+    if (m_impl) {
+        ret = m_impl->config_flush();
+    }
+    return ret;
+}
+
 void CSCLConnection::send_imengine_event(sclint ic, const sclchar *ic_uuid, const sclint command, const sclu32 value)
 {
     if (m_impl) {
