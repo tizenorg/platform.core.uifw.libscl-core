@@ -249,6 +249,13 @@ void CSCLCore::set_candidate_position(sclint left, sclint top)
     }
 }
 
+void CSCLCore::enable_soft_candidate(sclboolean enable)
+{
+    if (m_impl) {
+        m_impl->enable_soft_candidate(enable);
+    }
+}
+
 void CSCLCore::candidate_hide(void)
 {
     if (m_impl) {

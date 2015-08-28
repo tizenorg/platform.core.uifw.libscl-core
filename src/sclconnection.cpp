@@ -280,6 +280,13 @@ void CSCLConnection::set_candidate_position(sclint left, sclint top)
     }
 }
 
+void CSCLConnection::enable_soft_candidate(sclboolean enable)
+{
+    if (m_impl) {
+        m_impl->enable_soft_candidate(enable);
+    }
+}
+
 void CSCLConnection::candidate_hide(void)
 {
     if (m_impl) {

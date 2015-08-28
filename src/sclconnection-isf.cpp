@@ -928,6 +928,16 @@ void CSCLConnectionISF::set_candidate_position(sclint left, sclint top)
     }
 }
 
+void CSCLConnectionISF::enable_soft_candidate(sclboolean enable)
+{
+    if (m_initialized) {
+        if (enable)
+            m_helper_agent.set_candidate_style(scim::ONE_LINE_CANDIDATE, scim::SOFT_CANDIDATE_WINDOW);
+        else
+            m_helper_agent.set_candidate_style(scim::ONE_LINE_CANDIDATE, scim::FIXED_CANDIDATE_WINDOW);
+    }
+}
+
 void CSCLConnectionISF::candidate_hide(void)
 {
     if (m_initialized) {

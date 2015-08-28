@@ -235,6 +235,11 @@ void CSCLCoreImpl::set_candidate_position(sclint left, sclint top)
     m_connection.set_candidate_position(left, top);
 }
 
+void CSCLCoreImpl::enable_soft_candidate(sclboolean enable)
+{
+    m_connection.enable_soft_candidate(enable);
+}
+
 void CSCLCoreImpl::candidate_hide(void)
 {
     m_connection.candidate_hide();

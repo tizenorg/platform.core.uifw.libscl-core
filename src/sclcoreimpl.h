@@ -84,6 +84,7 @@ public:
     void get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
     void delete_surrounding_text(sclint offset, sclint len) const;
     void set_candidate_position(sclint left, sclint top);
+    void enable_soft_candidate(sclboolean enable);
     void candidate_hide(void);
     //void get_candidate_window_geometry (const String           &uuid) const;
     void set_keyboard_ise_by_uuid(const sclchar *uuid);

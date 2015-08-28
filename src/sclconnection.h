@@ -76,6 +76,7 @@ public:
     virtual void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
     virtual void delete_surrounding_text(sclint offset, sclint len) const;
     virtual void set_candidate_position(sclint left, sclint top);
+    virtual void enable_soft_candidate(sclboolean enable);
     virtual void candidate_hide(void);
     virtual void set_keyboard_ise_by_uuid(const sclchar *uuid);
     virtual void get_keyboard_ise(const sclchar *uuid);

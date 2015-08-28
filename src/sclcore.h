@@ -263,6 +263,13 @@ public:
     void set_candidate_position(sclint left, sclint top);
 
     /**
+     * @ brief Set soft candidate style.
+     *
+     * @param[in] enable The flag for soft candidate style.
+     */
+    void enable_soft_candidate(sclboolean enable);
+
+    /**
      * @ brief Request to hide candidate window.
      */
     void candidate_hide(void);
