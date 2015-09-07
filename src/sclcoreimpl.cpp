@@ -220,6 +220,11 @@ void CSCLCoreImpl::update_input_context(sclu32 type, sclu32 value)
     m_connection.update_input_context(type, value);
 }
 
+void CSCLCoreImpl::update_geometry(sclint x, sclint y, sclint width, sclint height)
+{
+    m_connection.update_geometry(x, y, width, height);
+}
+
 void CSCLCoreImpl::get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     m_connection.get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);

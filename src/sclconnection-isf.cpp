@@ -903,6 +903,13 @@ void CSCLConnectionISF::update_input_context(sclu32 type, sclu32 value)
     }
 }
 
+void CSCLConnectionISF::update_geometry(sclint x, sclint y, sclint width, sclint height)
+{
+    if (m_initialized) {
+        m_helper_agent.update_geometry(x, y, width, height);
+    }
+}
+
 void CSCLConnectionISF::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     if (m_initialized) {
@@ -963,13 +970,6 @@ void CSCLConnectionISF::set_selection(sclint start, sclint end)
 {
     if (m_initialized) {
        m_helper_agent.set_selection(start, end);
-    }
-}
-
-void CSCLConnectionISF::update_geometry(int x, int y, int width, int height)
-{
-    if (m_initialized) {
-        m_helper_agent.update_geometry(x, y, width, height);
     }
 }
 

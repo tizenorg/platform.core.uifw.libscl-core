@@ -228,6 +228,13 @@ void CSCLCore::update_input_context(sclu32 type, sclu32 value)
     }
 }
 
+void CSCLCore::update_geometry(sclint x, sclint y, sclint width, sclint height)
+{
+    if (m_impl) {
+        m_impl->update_geometry(x, y, width, height);
+    }
+}
+
 void CSCLCore::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     if (m_impl) {
