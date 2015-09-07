@@ -238,6 +238,17 @@ public:
     void update_input_context(sclu32 type, sclu32 value);
 
     /**
+     * @ brief When the geometry of ISE is changed,
+     *         ISE can call this function to notify application
+     *
+     * @param[in] x x position of ISE geometry.
+     * @param[in] y y position of ISE geometry.
+     * @param[in] width the width of ISE geometry.
+     * @param[in] height the height of ISE geometry.
+     */
+    void update_geometry(sclint x, sclint y, sclint width, sclint height);
+
+    /**
      * @ brief Request to get surrounding text.
      *
      * @param[in] ic_uuid The helper ISE UUID.

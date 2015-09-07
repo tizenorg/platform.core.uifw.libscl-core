@@ -73,6 +73,7 @@ public:
     void update_preedit_string(sclint ic, const sclchar *ic_uuid, const sclchar *str, const scim::AttributeList &attrs);
     void update_aux_string(const sclchar *str);
     void update_input_context(sclu32 type, sclu32 value);
+    void update_geometry(sclint x, sclint y, sclint width, sclint height);
     void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
     void delete_surrounding_text(sclint offset, sclint len) const;
     void set_candidate_position(sclint left, sclint top);
@@ -81,7 +82,6 @@ public:
     void set_keyboard_ise_by_uuid(const sclchar *uuid);
     void get_keyboard_ise(const sclchar *uuid);
     void set_selection(sclint start, sclint end);
-    void update_geometry(int x, int y, int width, int height);
 
 private:
     sclboolean m_initialized;

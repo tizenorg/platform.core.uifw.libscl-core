@@ -220,6 +220,11 @@ void CSCLCoreImpl::update_input_context(sclu32 type, sclu32 value)
     m_connection.update_input_context(type, value);
 }
 
+void CSCLCoreImpl::update_geometry(sclint x, sclint y, sclint width, sclint height)
+{
+    m_connection.update_geometry(x, y, width, height);
+}
+
 void CSCLCoreImpl::get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     m_connection.get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
@@ -297,11 +302,6 @@ int CSCLCoreImpl::get_screen_rotation_degree()
 
 void CSCLCoreImpl::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
-    int degree = m_core_ui.get_screen_rotation_degree();
-    if (degree == 90 || degree == 270)
-        m_connection.update_geometry(0, 0, landscape.width, landscape.height);
-    else
-        m_connection.update_geometry(0, 0, portrait.width, portrait.height);
     m_core_ui.set_keyboard_size_hints(portrait, landscape);
 }
 
