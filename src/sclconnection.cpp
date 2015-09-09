@@ -291,10 +291,3 @@ void CSCLConnection::get_keyboard_ise(const sclchar *uuid)
         m_impl->get_keyboard_ise(uuid);
     }
 }
-
-void CSCLConnection::update_geometry(int x, int y, int width, int height)
-{
-    if (m_impl) {
-        m_impl->update_geometry(x, y, width, height);
-    }
-}

@@ -287,11 +287,6 @@ int CSCLCoreImpl::get_screen_rotation_degree()
 
 void CSCLCoreImpl::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
 {
-    int degree = m_core_ui.get_screen_rotation_degree();
-    if (degree == 90 || degree == 270)
-        m_connection.update_geometry(0, 0, landscape.width, landscape.height);
-    else
-        m_connection.update_geometry(0, 0, portrait.width, portrait.height);
     m_core_ui.set_keyboard_size_hints(portrait, landscape);
 }
 

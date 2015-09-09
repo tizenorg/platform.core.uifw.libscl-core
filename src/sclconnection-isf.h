@@ -78,7 +78,6 @@ public:
     void candidate_hide(void);
     void set_keyboard_ise_by_uuid(const sclchar *uuid);
     void get_keyboard_ise(const sclchar *uuid);
-    void update_geometry(int x, int y, int width, int height);
 
 private:
     sclboolean m_initialized;

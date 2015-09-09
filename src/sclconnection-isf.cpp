@@ -934,13 +934,6 @@ void CSCLConnectionISF::get_keyboard_ise(const sclchar *uuid)
     }
 }
 
-void CSCLConnectionISF::update_geometry(int x, int y, int width, int height)
-{
-    if (m_initialized) {
-        m_helper_agent.update_geometry(x, y, width, height);
-    }
-}
-
 extern "C"
 {
     void scim_module_init (void) {

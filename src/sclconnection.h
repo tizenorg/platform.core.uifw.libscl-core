@@ -78,7 +78,6 @@ public:
     virtual void candidate_hide(void);
     virtual void set_keyboard_ise_by_uuid(const sclchar *uuid);
     virtual void get_keyboard_ise(const sclchar *uuid);
-    virtual void update_geometry(int x, int y, int width, int height);
 
 protected:
     std::string m_backend_identifier;
