@@ -321,3 +321,10 @@ void CSCLConnection::set_selection(sclint start, sclint end)
         m_impl->set_selection(start, end);
     }
 }
+
+void CSCLConnection::send_private_command(const sclchar *command)
+{
+    if (m_impl) {
+        m_impl->send_private_command(command);
+    }
+}

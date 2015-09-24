@@ -82,7 +82,7 @@ public:
     virtual void set_keyboard_ise_by_uuid(const sclchar *uuid);
     virtual void get_keyboard_ise(const sclchar *uuid);
     virtual void set_selection(sclint start, sclint end);
-
+    virtual void send_private_command(const sclchar *command);
 protected:
     std::string m_backend_identifier;
 

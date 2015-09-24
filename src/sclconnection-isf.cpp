@@ -973,6 +973,13 @@ void CSCLConnectionISF::set_selection(sclint start, sclint end)
     }
 }
 
+void CSCLConnectionISF::send_private_command(const sclchar *command)
+{
+    if (m_initialized) {
+       m_helper_agent.send_private_command(command);
+    }
+}
+
 extern "C"
 {
     void scim_module_init (void) {

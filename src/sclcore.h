@@ -341,6 +341,8 @@ public:
      */
     void set_selection(sclint start, sclint end);
 
+    void send_private_command(const sclchar *command);
+
 private:
     CSCLCoreImpl *m_impl;
 };

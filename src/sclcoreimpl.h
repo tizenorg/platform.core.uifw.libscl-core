@@ -100,6 +100,7 @@ public:
     void destroy_option_window(sclwindow window);
 
     void set_selection(sclint start, sclint end);
+    void send_private_command(const sclchar *command);
 
 private:
     ISCLCoreEventCallback *m_event_callback;

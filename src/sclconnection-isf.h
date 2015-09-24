@@ -82,7 +82,7 @@ public:
     void set_keyboard_ise_by_uuid(const sclchar *uuid);
     void get_keyboard_ise(const sclchar *uuid);
     void set_selection(sclint start, sclint end);
-
+    void send_private_command(const char *command);
 private:
     sclboolean m_initialized;
 

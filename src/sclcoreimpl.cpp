@@ -319,3 +319,8 @@ void CSCLCoreImpl::set_selection(sclint start, sclint end)
 {
     m_connection.set_selection(start, end);
 }
+
+void CSCLCoreImpl::send_private_command(const sclchar *command)
+{
+    m_connection.send_private_command(command);
+}
