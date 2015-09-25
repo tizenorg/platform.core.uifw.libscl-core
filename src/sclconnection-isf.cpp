@@ -426,6 +426,12 @@ static void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTab
                 lookup_table.candidate_labels.push_back(scim::utf8_wcstombs(label).c_str());
             }
 
+            int nCandidateSize = table.get_current_page_size();
+            for(int index=0; index<nCandidateSize; ++index){
+                scim::WideString candidate_str = table.get_candidate_in_current_page(index);
+                lookup_table.candidate.push_back(scim::utf8_wcstombs(candidate_str).c_str());
+            }
+
             callback->on_update_lookup_table(lookup_table);
 
             std::vector<scim::WideString> labels;

@@ -49,6 +49,7 @@ typedef struct _SclCandidateTable{
     sclboolean page_size_fixed;
 
     std::vector<std::string> candidate_labels;
+    std::vector<std::string> candidate;
 } SclCandidateTable;
 
 }
