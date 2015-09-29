@@ -514,6 +514,26 @@ static void slot_process_key_event (const scim::HelperAgent *agent, scim::KeyEve
     }
 }
 
+static void slot_candidate_show (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_candidate_show(ic, ic_uuid.c_str());
+        }
+    }
+}
+
+static void slot_candidate_hide (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_candidate_hide(ic, ic_uuid.c_str());
+        }
+    }
+}
+
 /* Internal input handler function */
 Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler)
 {
@@ -609,6 +629,8 @@ sclboolean CSCLConnectionISF::init()
         m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
         m_helper_agent.signal_connect_check_option_window (scim::slot (slot_check_ise_option_window));
         m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
+        m_helper_agent.signal_connect_candidate_show (scim::slot (slot_candidate_show));
+        m_helper_agent.signal_connect_candidate_hide (scim::slot (slot_candidate_hide));
 
         m_initialized = TRUE;
     }

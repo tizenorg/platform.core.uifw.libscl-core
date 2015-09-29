@@ -82,6 +82,9 @@ struct ISCLCoreEventCallback {
     virtual void on_create_option_window(sclwindow window, SCLOptionWindowType type) {}
     virtual void on_destroy_option_window(sclwindow window) {}
     virtual void on_check_option_window_availability(sclboolean *avail) { if (avail) *avail = false;}
+
+    virtual void on_candidate_show(sclint ic, const sclchar *ic_uuid) {}
+    virtual void on_candidate_hide(sclint ic, const sclchar *ic_uuid) {}
 };
 
 }
