@@ -96,7 +96,10 @@ void CSCLCoreUIEFL::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
     Evas_Object *main_window = NATIVE_WINDOW_CAST(m_main_window);
 
 #ifdef WAYLAND
-    evas_object_resize(main_window, portrait.width, portrait.height);
+    ecore_wl_window_rotation_geometry_set(elm_win_wl_window_get(main_window),   0, 0, 0, portrait.width, portrait.height);
+    ecore_wl_window_rotation_geometry_set(elm_win_wl_window_get(main_window),  90, 0, 0, landscape.height, landscape.width);
+    ecore_wl_window_rotation_geometry_set(elm_win_wl_window_get(main_window), 180, 0, 0, portrait.width, portrait.height);
+    ecore_wl_window_rotation_geometry_set(elm_win_wl_window_get(main_window), 270, 0, 0, landscape.height, landscape.width);
 #else
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window),   0, 0, 0, portrait.width, portrait.height);
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window),  90, 0, 0, landscape.height, landscape.width);
