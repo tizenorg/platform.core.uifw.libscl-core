@@ -157,7 +157,7 @@ void language_changed_cb(keynode_t *key, void* data)
     }
 }
 
-void accessibility_changed_cb(keynode_t *key, void* data)
+static void accessibility_changed_cb(keynode_t *key, void* data)
 {
     int vconf_value = 0;
     if (vconf_get_bool(VCONFKEY_SETAPPL_ACCESSIBILITY_TTS, &vconf_value) == 0) {
