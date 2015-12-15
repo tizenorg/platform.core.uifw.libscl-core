@@ -83,6 +83,7 @@ public:
     void update_input_context(sclu32 type, sclu32 value);
     void update_geometry(sclint x, sclint y, sclint width, sclint height);
     void get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
+	void get_selection(const sclchar* ic_uuid) const;
     void delete_surrounding_text(sclint offset, sclint len) const;
     void set_candidate_position(sclint left, sclint top);
     void enable_soft_candidate(sclboolean enable);

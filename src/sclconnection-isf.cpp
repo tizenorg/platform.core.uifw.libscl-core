@@ -20,6 +20,12 @@
 #include <Elementary.h>
 #include <dlog.h>
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "SCL_CORE"
+
+
 using namespace scl;
 
 static scim::ConfigPointer _scim_config (0);
@@ -109,6 +115,17 @@ static void slot_update_surrounding_text (const scim::HelperAgent *agent, int ic
         }
     }
 }
+
+static void slot_ime_get_selection (const scim::HelperAgent *agent, int ic, const scim::String &text) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_get_selection(ic, text.c_str());
+        }
+    }
+}
+
 
 static void slot_trigger_property (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, const scim::String &property) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
@@ -591,6 +608,7 @@ sclboolean CSCLConnectionISF::init()
         m_helper_agent.signal_connect_update_spot_location (scim::slot (slot_update_spot_location));
         m_helper_agent.signal_connect_update_cursor_position (scim::slot (slot_update_cursor_position));
         m_helper_agent.signal_connect_update_surrounding_text (scim::slot (slot_update_surrounding_text));
+        m_helper_agent.signal_connect_update_selection (scim::slot (slot_ime_get_selection));
         m_helper_agent.signal_connect_trigger_property (scim::slot (slot_trigger_property));
         //m_helper_agent.signal_connect_process_imengine_event (slot (slot_process_imengine_event));
         m_helper_agent.signal_connect_focus_out (scim::slot (slot_focus_out));
@@ -946,6 +964,17 @@ void CSCLConnectionISF::get_surrounding_text(const sclchar *ic_uuid, sclint maxl
             uuid = scim::String(ic_uuid);
         }
         m_helper_agent.get_surrounding_text(uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLConnectionISF::get_selection(const sclchar *ic_uuid) const
+{
+    if (m_initialized) {
+        scim::String uuid;
+        if (ic_uuid) {
+            uuid = scim::String(ic_uuid);
+        }
+        m_helper_agent.get_selection(uuid);
     }
 }
 

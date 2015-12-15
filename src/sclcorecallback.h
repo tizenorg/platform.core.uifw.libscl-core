@@ -41,6 +41,7 @@ struct ISCLCoreEventCallback {
     virtual void on_update_spot_location(sclint ic, const sclchar *ic_uuid, sclint x, sclint y) {}
     virtual void on_update_cursor_position(sclint ic, const sclchar *ic_uuid, sclint cursor_pos) {}
     virtual void on_update_surrounding_text(sclint ic, const sclchar *text, sclint cursor) {}
+	virtual void on_get_selection(sclint ic, const sclchar *text) {}
     virtual void on_focus_out(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_focus_in(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_ise_show(sclint ic, const int degree, Ise_Context &context) {}
