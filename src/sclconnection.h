@@ -75,6 +75,7 @@ public:
     virtual void update_input_context(sclu32 type, sclu32 value);
     virtual void update_geometry(sclint x, sclint y, sclint width, sclint height);
     virtual void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
+    virtual void get_selection_text(const sclchar *ic_uuid) const;
     virtual void delete_surrounding_text(sclint offset, sclint len) const;
     virtual void set_candidate_position(sclint left, sclint top);
     virtual void enable_soft_candidate(sclboolean enable);

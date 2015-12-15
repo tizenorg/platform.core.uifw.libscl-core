@@ -85,6 +85,7 @@ struct ISCLCoreEventCallback {
 
     virtual void on_candidate_show(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_candidate_hide(sclint ic, const sclchar *ic_uuid) {}
+    virtual void on_update_selection_text(sclint ic, const sclchar *text) {}
 };
 
 }

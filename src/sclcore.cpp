@@ -18,6 +18,11 @@
 #include "sclcore.h"
 #include "sclcoreimpl.h"
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "LIBSCL_CORE"
+
 using namespace scl;
 
 CSCLCore::CSCLCore(ISCLCoreEventCallback *callback)
@@ -239,6 +244,13 @@ void CSCLCore::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before
 {
     if (m_impl) {
         m_impl->get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLCore::get_selection_text(const sclchar *ic_uuid) const
+{
+    if (m_impl) {
+        m_impl->get_selection_text(ic_uuid);
     }
 }
 
