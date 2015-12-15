@@ -20,6 +20,11 @@
 #include <Elementary.h>
 #include <dlog.h>
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "LIBSCL_CORE"
+
 using namespace scl;
 
 static scim::ConfigPointer _scim_config(0);
@@ -106,6 +111,16 @@ static void slot_update_surrounding_text(const scim::HelperAgent *agent, int ic,
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
             callback->on_update_surrounding_text(ic, text.c_str(), cursor);
+        }
+    }
+}
+
+static void slot_update_selection_text(const scim::HelperAgent *agent, int ic, const scim::String &text) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            callback->on_update_selection_text(ic, text.c_str());
         }
     }
 }
@@ -631,6 +646,7 @@ sclboolean CSCLConnectionISF::init()
         m_helper_agent.signal_connect_process_key_event(scim::slot(slot_process_key_event));
         m_helper_agent.signal_connect_candidate_show(scim::slot(slot_candidate_show));
         m_helper_agent.signal_connect_candidate_hide(scim::slot(slot_candidate_hide));
+        m_helper_agent.signal_connect_update_selection(scim::slot(slot_update_selection_text));
 
         m_initialized = TRUE;
     }
@@ -946,6 +962,17 @@ void CSCLConnectionISF::get_surrounding_text(const sclchar *ic_uuid, sclint maxl
             uuid = scim::String(ic_uuid);
         }
         m_helper_agent.get_surrounding_text(uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLConnectionISF::get_selection_text(const sclchar *ic_uuid) const
+{
+    if (m_initialized) {
+        scim::String uuid;
+        if (ic_uuid) {
+            uuid = scim::String(ic_uuid);
+        }
+        m_helper_agent.get_selection(uuid);
     }
 }
 

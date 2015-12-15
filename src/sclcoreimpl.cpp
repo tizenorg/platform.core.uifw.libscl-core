@@ -19,6 +19,11 @@
 #include <app_common.h>
 #include <dlog.h>
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "LIBSCL_CORE"
+
 using namespace scl;
 
 CSCLCoreImpl::CSCLCoreImpl()
@@ -230,6 +235,11 @@ void CSCLCoreImpl::update_geometry(sclint x, sclint y, sclint width, sclint heig
 void CSCLCoreImpl::get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     m_connection.get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+}
+
+void CSCLCoreImpl::get_selection_text(const sclchar* ic_uuid) const
+{
+    m_connection.get_selection_text(ic_uuid);
 }
 
 void CSCLCoreImpl::delete_surrounding_text(sclint offset, sclint len) const

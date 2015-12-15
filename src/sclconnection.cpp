@@ -19,6 +19,11 @@
 
 #include "sclconnection-isf.h"
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "LIBSCL_CORE"
+
 using namespace scl;
 
 CSCLConnection::CSCLConnection()
@@ -270,6 +275,13 @@ void CSCLConnection::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_
 {
     if (m_impl) {
         m_impl->get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLConnection::get_selection_text(const sclchar *ic_uuid) const
+{
+    if (m_impl) {
+        m_impl->get_selection_text(ic_uuid);
     }
 }
 
