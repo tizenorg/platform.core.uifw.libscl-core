@@ -19,6 +19,11 @@
 
 #include "sclconnection-isf.h"
 
+#ifdef LOG_TAG
+# undef LOG_TAG
+#endif
+#define LOG_TAG             "LIBSCL_CORE"
+
 using namespace scl;
 
 CSCLConnection::CSCLConnection()
@@ -269,15 +274,22 @@ void CSCLConnection::update_geometry(sclint x, sclint y, sclint width, sclint he
 void CSCLConnection::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const
 {
     if (m_impl) {
-         m_impl->get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
-     }
+        m_impl->get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
+    }
+}
+
+void CSCLConnection::get_selection_text(const sclchar *ic_uuid) const
+{
+    if (m_impl) {
+        m_impl->get_selection_text(ic_uuid);
+    }
 }
 
 void CSCLConnection::delete_surrounding_text(sclint offset, sclint len) const
 {
     if (m_impl) {
-         m_impl->delete_surrounding_text(offset, len);
-     }
+        m_impl->delete_surrounding_text(offset, len);
+    }
 }
 
 void CSCLConnection::set_candidate_position(sclint left, sclint top)

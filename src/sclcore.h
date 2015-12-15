@@ -258,6 +258,13 @@ public:
     void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
 
     /**
+     * @ brief Request to get selection.
+     *
+     * @param[in] ic_uuid The helper ISE UUID.
+     */
+    void get_selection_text(const sclchar *ic_uuid) const;
+
+    /**
      * @ brief Request to delete surrounding text.
      *
      * @param[in] offset The offset for cursor position.
