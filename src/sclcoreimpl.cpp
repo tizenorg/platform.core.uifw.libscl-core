@@ -266,13 +266,13 @@ void CSCLCoreImpl::on_run(const sclchar *uuid, const sclchar *display)
     m_connection.init();
 
     if (m_uuid) {
-        free (m_uuid);
+        free(m_uuid);
     }
 
     m_uuid = strdup(uuid);
 
     if (m_display) {
-        free (m_display);
+        free(m_display);
     }
 
     m_display = strdup(display);

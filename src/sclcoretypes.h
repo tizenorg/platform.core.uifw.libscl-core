@@ -41,7 +41,7 @@ typedef enum _SCLOptionWindowType
     OPTION_WINDOW_TYPE_MAX,
 } SCLOptionWindowType;
 
-typedef struct _SclCandidateTable{
+typedef struct _SclCandidateTable {
     sclint page_size;
     sclint current_page_start;
     sclint cursor_pos;

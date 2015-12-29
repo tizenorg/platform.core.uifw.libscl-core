@@ -22,10 +22,10 @@
 
 using namespace scl;
 
-static scim::ConfigPointer _scim_config (0);
+static scim::ConfigPointer _scim_config(0);
 
 /* Slot functions for calling appropriate callback functions */
-static void slot_exit (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_exit(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -37,10 +37,10 @@ static void slot_exit (const scim::HelperAgent *agent, int ic, const scim::Strin
             agent->update_ise_exit();
         }
     }
-    elm_exit ();
+    elm_exit();
 }
 
-static void slot_attach_input_context (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_attach_input_context(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -50,7 +50,7 @@ static void slot_attach_input_context (const scim::HelperAgent *agent, int ic, c
     }
 }
 
-static void slot_detach_input_context (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_detach_input_context(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -60,7 +60,7 @@ static void slot_detach_input_context (const scim::HelperAgent *agent, int ic, c
     }
 }
 
-static void slot_reload_config (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_reload_config(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -70,7 +70,7 @@ static void slot_reload_config (const scim::HelperAgent *agent, int ic, const sc
     }
 }
 
-static void slot_update_screen (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int screen_number) {
+static void slot_update_screen(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int screen_number) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -80,7 +80,7 @@ static void slot_update_screen (const scim::HelperAgent *agent, int ic, const sc
     }
 }
 
-static void slot_update_spot_location (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int x, int y) {
+static void slot_update_spot_location(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int x, int y) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -90,7 +90,7 @@ static void slot_update_spot_location (const scim::HelperAgent *agent, int ic, c
     }
 }
 
-static void slot_update_cursor_position (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int cursor_pos) {
+static void slot_update_cursor_position(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, int cursor_pos) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -100,7 +100,7 @@ static void slot_update_cursor_position (const scim::HelperAgent *agent, int ic,
     }
 }
 
-static void slot_update_surrounding_text (const scim::HelperAgent *agent, int ic, const scim::String &text, int cursor) {
+static void slot_update_surrounding_text(const scim::HelperAgent *agent, int ic, const scim::String &text, int cursor) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -110,7 +110,7 @@ static void slot_update_surrounding_text (const scim::HelperAgent *agent, int ic
     }
 }
 
-static void slot_trigger_property (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, const scim::String &property) {
+static void slot_trigger_property(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid, const scim::String &property) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -120,7 +120,7 @@ static void slot_trigger_property (const scim::HelperAgent *agent, int ic, const
     }
 }
 
-static void slot_focus_out (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_focus_out(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -130,7 +130,7 @@ static void slot_focus_out (const scim::HelperAgent *agent, int ic, const scim::
     }
 }
 
-static void slot_focus_in (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_focus_in(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -140,7 +140,7 @@ static void slot_focus_in (const scim::HelperAgent *agent, int ic, const scim::S
     }
 }
 
-static void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, size_t &len) {
+static void slot_ise_show(const scim::HelperAgent *agent, int ic, char *buf, size_t &len) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         /* Make sure the appropriate keyboard ise was selected -> is this really necessary? */
@@ -166,7 +166,7 @@ static void slot_ise_show (const scim::HelperAgent *agent, int ic, char *buf, si
     }
 }
 
-static void slot_ise_hide (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_ise_hide(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -176,7 +176,7 @@ static void slot_ise_hide (const scim::HelperAgent *agent, int ic, const scim::S
     }
 }
 
-static void slot_get_geometry (const scim::HelperAgent *agent, struct scim::rectinfo &info) {
+static void slot_get_geometry(const scim::HelperAgent *agent, struct scim::rectinfo &info) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -186,7 +186,7 @@ static void slot_get_geometry (const scim::HelperAgent *agent, struct scim::rect
     }
 }
 
-static void slot_set_mode (const scim::HelperAgent *agent, scim::uint32 &mode) {
+static void slot_set_mode(const scim::HelperAgent *agent, scim::uint32 &mode) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -196,7 +196,7 @@ static void slot_set_mode (const scim::HelperAgent *agent, scim::uint32 &mode) {
     }
 }
 
-static void slot_set_language (const scim::HelperAgent *agent, scim::uint32 &language) {
+static void slot_set_language(const scim::HelperAgent *agent, scim::uint32 &language) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -206,7 +206,7 @@ static void slot_set_language (const scim::HelperAgent *agent, scim::uint32 &lan
     }
 }
 
-static void slot_set_imdata (const scim::HelperAgent *agent, char *buf, size_t &len) {
+static void slot_set_imdata(const scim::HelperAgent *agent, char *buf, size_t &len) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -217,7 +217,7 @@ static void slot_set_imdata (const scim::HelperAgent *agent, char *buf, size_t &
     }
 }
 
-static void slot_get_imdata (const scim::HelperAgent *, char **buf, size_t &len) {
+static void slot_get_imdata(const scim::HelperAgent *, char **buf, size_t &len) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -229,7 +229,7 @@ static void slot_get_imdata (const scim::HelperAgent *, char **buf, size_t &len)
     }
 }
 
-static void slot_get_language_locale (const scim::HelperAgent *, int ic, char **locale) {
+static void slot_get_language_locale(const scim::HelperAgent *, int ic, char **locale) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -239,7 +239,7 @@ static void slot_get_language_locale (const scim::HelperAgent *, int ic, char **
     }
 }
 
-static void slot_set_return_key_type (const scim::HelperAgent *agent, scim::uint32 &type) {
+static void slot_set_return_key_type(const scim::HelperAgent *agent, scim::uint32 &type) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -249,7 +249,7 @@ static void slot_set_return_key_type (const scim::HelperAgent *agent, scim::uint
     }
 }
 
-static void slot_get_return_key_type (const scim::HelperAgent *agent, scim::uint32 &type) {
+static void slot_get_return_key_type(const scim::HelperAgent *agent, scim::uint32 &type) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -259,7 +259,7 @@ static void slot_get_return_key_type (const scim::HelperAgent *agent, scim::uint
     }
 }
 
-static void slot_set_return_key_disable (const scim::HelperAgent *agent, scim::uint32 &disabled) {
+static void slot_set_return_key_disable(const scim::HelperAgent *agent, scim::uint32 &disabled) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -269,7 +269,7 @@ static void slot_set_return_key_disable (const scim::HelperAgent *agent, scim::u
     }
 }
 
-static void slot_get_return_key_disable (const scim::HelperAgent *agent, scim::uint32 &disabled) {
+static void slot_get_return_key_disable(const scim::HelperAgent *agent, scim::uint32 &disabled) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -279,7 +279,7 @@ static void slot_get_return_key_disable (const scim::HelperAgent *agent, scim::u
     }
 }
 
-static void slot_set_layout (const scim::HelperAgent *agent, scim::uint32 &layout) {
+static void slot_set_layout(const scim::HelperAgent *agent, scim::uint32 &layout) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -289,7 +289,7 @@ static void slot_set_layout (const scim::HelperAgent *agent, scim::uint32 &layou
     }
 }
 
-static void slot_get_layout (const scim::HelperAgent *agent, scim::uint32 &layout) {
+static void slot_get_layout(const scim::HelperAgent *agent, scim::uint32 &layout) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -299,7 +299,7 @@ static void slot_get_layout (const scim::HelperAgent *agent, scim::uint32 &layou
     }
 }
 
-static void slot_set_caps_mode (const scim::HelperAgent *agent, scim::uint32 &mode) {
+static void slot_set_caps_mode(const scim::HelperAgent *agent, scim::uint32 &mode) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -309,7 +309,7 @@ static void slot_set_caps_mode (const scim::HelperAgent *agent, scim::uint32 &mo
     }
 }
 
-static void slot_reset_input_context (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_reset_input_context(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -319,7 +319,7 @@ static void slot_reset_input_context (const scim::HelperAgent *agent, int ic, co
     }
 }
 
-static void slot_update_candidate_geometry (const scim::HelperAgent *agent, int ic, const scim::String &uuid, const scim::rectinfo &info) {
+static void slot_update_candidate_geometry(const scim::HelperAgent *agent, int ic, const scim::String &uuid, const scim::rectinfo &info) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -328,7 +328,7 @@ static void slot_update_candidate_geometry (const scim::HelperAgent *agent, int 
         }
     }
 }
-static void slot_update_keyboard_ise (const scim::HelperAgent *agent, int ic, const scim::String &uuid,
+static void slot_update_keyboard_ise(const scim::HelperAgent *agent, int ic, const scim::String &uuid,
                                                   const scim::String &ise_name, const scim::String &ise_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -339,7 +339,7 @@ static void slot_update_keyboard_ise (const scim::HelperAgent *agent, int ic, co
     }
 }
 
-static void slot_candidate_more_window_show (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_candidate_more_window_show(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -349,7 +349,7 @@ static void slot_candidate_more_window_show (const scim::HelperAgent *agent, int
     }
 }
 
-static void slot_candidate_more_window_hide (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_candidate_more_window_hide(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -359,7 +359,7 @@ static void slot_candidate_more_window_hide (const scim::HelperAgent *agent, int
     }
 }
 
-static void slot_select_aux (const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
+static void slot_select_aux(const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -369,7 +369,7 @@ static void slot_select_aux (const scim::HelperAgent *agent, int ic, const scim:
     }
 }
 
-static void slot_select_candidate (const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
+static void slot_select_candidate(const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -379,7 +379,7 @@ static void slot_select_candidate (const scim::HelperAgent *agent, int ic, const
     }
 }
 
-static void slot_candidate_table_page_up (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_candidate_table_page_up(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -389,7 +389,7 @@ static void slot_candidate_table_page_up (const scim::HelperAgent *agent, int ic
     }
 }
 
-static void slot_candidate_table_page_down (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_candidate_table_page_down(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -399,7 +399,7 @@ static void slot_candidate_table_page_down (const scim::HelperAgent *agent, int 
     }
 }
 
-static void slot_update_candidate_table_page_size (const scim::HelperAgent *, int ic, const scim::String &uuid, int page_size) {
+static void slot_update_candidate_table_page_size(const scim::HelperAgent *, int ic, const scim::String &uuid, int page_size) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -409,7 +409,7 @@ static void slot_update_candidate_table_page_size (const scim::HelperAgent *, in
     }
 }
 
-static void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTable &table) {
+static void slot_update_lookup_table(const scim::HelperAgent *, scim::LookupTable &table) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -427,7 +427,7 @@ static void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTab
             }
 
             int nCandidateSize = table.get_current_page_size();
-            for(int index=0; index<nCandidateSize; ++index){
+            for (int index = 0; index < nCandidateSize; ++index) {
                 scim::WideString candidate_str = table.get_candidate_in_current_page(index);
                 lookup_table.candidate.push_back(scim::utf8_wcstombs(candidate_str).c_str());
             }
@@ -443,7 +443,7 @@ static void slot_update_lookup_table (const scim::HelperAgent *, scim::LookupTab
     }
 }
 
-static void slot_select_associate (const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
+static void slot_select_associate(const scim::HelperAgent *agent, int ic, const scim::String &uuid, int index) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -453,7 +453,7 @@ static void slot_select_associate (const scim::HelperAgent *agent, int ic, const
     }
 }
 
-static void slot_associate_table_page_up (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_associate_table_page_up(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -463,7 +463,7 @@ static void slot_associate_table_page_up (const scim::HelperAgent *agent, int ic
     }
 }
 
-static void slot_associate_table_page_down (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_associate_table_page_down(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -473,7 +473,7 @@ static void slot_associate_table_page_down (const scim::HelperAgent *agent, int 
     }
 }
 
-static void slot_update_associate_table_page_size (const scim::HelperAgent *, int ic, const scim::String &uuid, int page_size) {
+static void slot_update_associate_table_page_size(const scim::HelperAgent *, int ic, const scim::String &uuid, int page_size) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -483,7 +483,7 @@ static void slot_update_associate_table_page_size (const scim::HelperAgent *, in
     }
 }
 
-static void slot_show_ise_option_window (const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
+static void slot_show_ise_option_window(const scim::HelperAgent *agent, int ic, const scim::String &uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         CSCLCoreUI *core_ui = impl->get_core_ui();
@@ -494,7 +494,7 @@ static void slot_show_ise_option_window (const scim::HelperAgent *agent, int ic,
     }
 }
 
-static void slot_check_ise_option_window (const scim::HelperAgent *agent, sclu32 &avail) {
+static void slot_check_ise_option_window(const scim::HelperAgent *agent, sclu32 &avail) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -504,17 +504,17 @@ static void slot_check_ise_option_window (const scim::HelperAgent *agent, sclu32
     }
 }
 
-static void slot_process_key_event (const scim::HelperAgent *agent, scim::KeyEvent &key, scim::uint32 &ret) {
+static void slot_process_key_event(const scim::HelperAgent *agent, scim::KeyEvent &key, scim::uint32 &ret) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
-            callback->on_process_key_event (key, &ret);
+            callback->on_process_key_event(key, &ret);
         }
     }
 }
 
-static void slot_candidate_show (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_candidate_show(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -524,7 +524,7 @@ static void slot_candidate_show (const scim::HelperAgent *agent, int ic, const s
     }
 }
 
-static void slot_candidate_hide (const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
+static void slot_candidate_hide(const scim::HelperAgent *agent, int ic, const scim::String &ic_uuid) {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
@@ -535,7 +535,7 @@ static void slot_candidate_hide (const scim::HelperAgent *agent, int ic, const s
 }
 
 /* Internal input handler function */
-Eina_Bool input_handler (void *data, Ecore_Fd_Handler *fd_handler)
+Eina_Bool input_handler(void *data, Ecore_Fd_Handler *fd_handler)
 {
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -572,7 +572,7 @@ CSCLConnectionISF::~CSCLConnectionISF()
 
 sclboolean CSCLConnectionISF::init()
 {
-    LOGD ("Enter");
+    LOGD("Enter");
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -583,54 +583,54 @@ sclboolean CSCLConnectionISF::init()
     }
 
     if (!m_initialized) {
-        m_helper_agent.signal_connect_exit (scim::slot (slot_exit));
-        m_helper_agent.signal_connect_attach_input_context (scim::slot (slot_attach_input_context));
-        m_helper_agent.signal_connect_detach_input_context (scim::slot (slot_detach_input_context));
-        m_helper_agent.signal_connect_reload_config (scim::slot (slot_reload_config));
-        m_helper_agent.signal_connect_update_screen (scim::slot (slot_update_screen));
-        m_helper_agent.signal_connect_update_spot_location (scim::slot (slot_update_spot_location));
-        m_helper_agent.signal_connect_update_cursor_position (scim::slot (slot_update_cursor_position));
-        m_helper_agent.signal_connect_update_surrounding_text (scim::slot (slot_update_surrounding_text));
-        m_helper_agent.signal_connect_trigger_property (scim::slot (slot_trigger_property));
+        m_helper_agent.signal_connect_exit(scim::slot(slot_exit));
+        m_helper_agent.signal_connect_attach_input_context(scim::slot(slot_attach_input_context));
+        m_helper_agent.signal_connect_detach_input_context(scim::slot(slot_detach_input_context));
+        m_helper_agent.signal_connect_reload_config(scim::slot(slot_reload_config));
+        m_helper_agent.signal_connect_update_screen(scim::slot(slot_update_screen));
+        m_helper_agent.signal_connect_update_spot_location(scim::slot(slot_update_spot_location));
+        m_helper_agent.signal_connect_update_cursor_position(scim::slot(slot_update_cursor_position));
+        m_helper_agent.signal_connect_update_surrounding_text(scim::slot(slot_update_surrounding_text));
+        m_helper_agent.signal_connect_trigger_property(scim::slot(slot_trigger_property));
         //m_helper_agent.signal_connect_process_imengine_event (slot (slot_process_imengine_event));
-        m_helper_agent.signal_connect_focus_out (scim::slot (slot_focus_out));
-        m_helper_agent.signal_connect_focus_in (scim::slot (slot_focus_in));
-        m_helper_agent.signal_connect_ise_show (scim::slot (slot_ise_show));
-        m_helper_agent.signal_connect_ise_hide (scim::slot (slot_ise_hide));
-        m_helper_agent.signal_connect_get_geometry (scim::slot (slot_get_geometry));
-        m_helper_agent.signal_connect_set_mode (scim::slot (slot_set_mode));
-        m_helper_agent.signal_connect_set_language (scim::slot (slot_set_language));
-        m_helper_agent.signal_connect_set_imdata (scim::slot (slot_set_imdata));
-        m_helper_agent.signal_connect_get_imdata (scim::slot (slot_get_imdata));
-        m_helper_agent.signal_connect_get_language_locale (scim::slot (slot_get_language_locale));
-        m_helper_agent.signal_connect_set_return_key_type (scim::slot (slot_set_return_key_type));
-        m_helper_agent.signal_connect_get_return_key_type (scim::slot (slot_get_return_key_type));
-        m_helper_agent.signal_connect_set_return_key_disable (scim::slot (slot_set_return_key_disable));
-        m_helper_agent.signal_connect_get_return_key_disable (scim::slot (slot_get_return_key_disable));
-        m_helper_agent.signal_connect_get_layout (scim::slot (slot_get_layout));
-        m_helper_agent.signal_connect_set_layout (scim::slot (slot_set_layout));
-        m_helper_agent.signal_connect_set_caps_mode (scim::slot (slot_set_caps_mode));
-        m_helper_agent.signal_connect_reset_input_context (scim::slot (slot_reset_input_context));
-        m_helper_agent.signal_connect_update_candidate_geometry (scim::slot (slot_update_candidate_geometry));
-        m_helper_agent.signal_connect_update_keyboard_ise (scim::slot (slot_update_keyboard_ise));
+        m_helper_agent.signal_connect_focus_out(scim::slot(slot_focus_out));
+        m_helper_agent.signal_connect_focus_in(scim::slot(slot_focus_in));
+        m_helper_agent.signal_connect_ise_show(scim::slot(slot_ise_show));
+        m_helper_agent.signal_connect_ise_hide(scim::slot(slot_ise_hide));
+        m_helper_agent.signal_connect_get_geometry(scim::slot(slot_get_geometry));
+        m_helper_agent.signal_connect_set_mode(scim::slot(slot_set_mode));
+        m_helper_agent.signal_connect_set_language(scim::slot(slot_set_language));
+        m_helper_agent.signal_connect_set_imdata(scim::slot(slot_set_imdata));
+        m_helper_agent.signal_connect_get_imdata(scim::slot(slot_get_imdata));
+        m_helper_agent.signal_connect_get_language_locale(scim::slot(slot_get_language_locale));
+        m_helper_agent.signal_connect_set_return_key_type(scim::slot(slot_set_return_key_type));
+        m_helper_agent.signal_connect_get_return_key_type(scim::slot(slot_get_return_key_type));
+        m_helper_agent.signal_connect_set_return_key_disable(scim::slot(slot_set_return_key_disable));
+        m_helper_agent.signal_connect_get_return_key_disable(scim::slot(slot_get_return_key_disable));
+        m_helper_agent.signal_connect_get_layout(scim::slot(slot_get_layout));
+        m_helper_agent.signal_connect_set_layout(scim::slot(slot_set_layout));
+        m_helper_agent.signal_connect_set_caps_mode(scim::slot(slot_set_caps_mode));
+        m_helper_agent.signal_connect_reset_input_context(scim::slot(slot_reset_input_context));
+        m_helper_agent.signal_connect_update_candidate_geometry(scim::slot(slot_update_candidate_geometry));
+        m_helper_agent.signal_connect_update_keyboard_ise(scim::slot(slot_update_keyboard_ise));
         //m_helper_agent.signal_connect_update_keyboard_ise_list (slot (slot_update_keyboard_ise_list));
-        m_helper_agent.signal_connect_candidate_more_window_show (scim::slot (slot_candidate_more_window_show));
-        m_helper_agent.signal_connect_candidate_more_window_hide (scim::slot (slot_candidate_more_window_hide));
-        m_helper_agent.signal_connect_select_aux (scim::slot (slot_select_aux));
-        m_helper_agent.signal_connect_select_candidate (scim::slot (slot_select_candidate));
-        m_helper_agent.signal_connect_candidate_table_page_up (scim::slot (slot_candidate_table_page_up));
-        m_helper_agent.signal_connect_candidate_table_page_down (scim::slot (slot_candidate_table_page_down));
-        m_helper_agent.signal_connect_update_candidate_table_page_size (scim::slot (slot_update_candidate_table_page_size));
-        m_helper_agent.signal_connect_update_lookup_table (scim::slot (slot_update_lookup_table));
-        m_helper_agent.signal_connect_select_associate (scim::slot (slot_select_associate));
-        m_helper_agent.signal_connect_associate_table_page_up (scim::slot (slot_associate_table_page_up));
-        m_helper_agent.signal_connect_associate_table_page_down (scim::slot (slot_associate_table_page_down));
-        m_helper_agent.signal_connect_update_associate_table_page_size (scim::slot (slot_update_associate_table_page_size));
-        m_helper_agent.signal_connect_show_option_window (scim::slot (slot_show_ise_option_window));
-        m_helper_agent.signal_connect_check_option_window (scim::slot (slot_check_ise_option_window));
-        m_helper_agent.signal_connect_process_key_event (scim::slot (slot_process_key_event));
-        m_helper_agent.signal_connect_candidate_show (scim::slot (slot_candidate_show));
-        m_helper_agent.signal_connect_candidate_hide (scim::slot (slot_candidate_hide));
+        m_helper_agent.signal_connect_candidate_more_window_show(scim::slot(slot_candidate_more_window_show));
+        m_helper_agent.signal_connect_candidate_more_window_hide(scim::slot(slot_candidate_more_window_hide));
+        m_helper_agent.signal_connect_select_aux(scim::slot(slot_select_aux));
+        m_helper_agent.signal_connect_select_candidate(scim::slot(slot_select_candidate));
+        m_helper_agent.signal_connect_candidate_table_page_up(scim::slot(slot_candidate_table_page_up));
+        m_helper_agent.signal_connect_candidate_table_page_down(scim::slot(slot_candidate_table_page_down));
+        m_helper_agent.signal_connect_update_candidate_table_page_size(scim::slot(slot_update_candidate_table_page_size));
+        m_helper_agent.signal_connect_update_lookup_table(scim::slot(slot_update_lookup_table));
+        m_helper_agent.signal_connect_select_associate(scim::slot(slot_select_associate));
+        m_helper_agent.signal_connect_associate_table_page_up(scim::slot(slot_associate_table_page_up));
+        m_helper_agent.signal_connect_associate_table_page_down(scim::slot(slot_associate_table_page_down));
+        m_helper_agent.signal_connect_update_associate_table_page_size(scim::slot(slot_update_associate_table_page_size));
+        m_helper_agent.signal_connect_show_option_window(scim::slot(slot_show_ise_option_window));
+        m_helper_agent.signal_connect_check_option_window(scim::slot(slot_check_ise_option_window));
+        m_helper_agent.signal_connect_process_key_event(scim::slot(slot_process_key_event));
+        m_helper_agent.signal_connect_candidate_show(scim::slot(slot_candidate_show));
+        m_helper_agent.signal_connect_candidate_hide(scim::slot(slot_candidate_hide));
 
         m_initialized = TRUE;
     }
@@ -759,7 +759,7 @@ void CSCLConnectionISF::send_imengine_event(sclint ic, const sclchar *ic_uuid, c
         }
         scim::Transaction trans;
         trans.put_command(command);
-        trans.put_data (value);
+        trans.put_data(value);
         m_helper_agent.send_imengine_event(ic, uuid, trans);
     }
 }
@@ -1010,13 +1010,13 @@ void CSCLConnectionISF::send_private_command(const sclchar *command)
 
 extern "C"
 {
-    void scim_module_init (void) {
+    void scim_module_init(void) {
     }
 
-    void scim_module_exit (void) {
+    void scim_module_exit(void) {
     }
 
-    void scim_helper_module_run_helper (const scim::String &uuid, const scim::ConfigPointer &config, const scim::String &display) {
+    void scim_helper_module_run_helper(const scim::String &uuid, const scim::ConfigPointer &config, const scim::String &display) {
         _scim_config = config;
         CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
         if (impl) {
