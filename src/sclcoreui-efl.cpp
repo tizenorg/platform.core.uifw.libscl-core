@@ -140,7 +140,7 @@ const char * extract_themename_from_theme_file_path(const char *filepath) {
     return themename;
 }
 
-void language_changed_cb(keynode_t *key, void* data)
+static void language_changed_cb(keynode_t *key, void* data)
 {
     char clang[_POSIX_PATH_MAX] = {0};
     char *vconf_str = vconf_get_str(VCONFKEY_LANGSET);
@@ -175,7 +175,27 @@ static void accessibility_changed_cb(keynode_t *key, void* data)
     }
 }
 
-#ifndef WAYLAND
+#ifdef WAYLAND
+static void win_rotation_changed_cb(void *data, Evas_Object *obj, void *event)
+{
+    int degree = elm_win_rotation_get(obj);
+    LOGD("rotation angle : %d\n", degree);
+
+    ISCLCoreEventCallback *callback = NULL;
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        callback = impl->get_core_event_callback();
+    }
+
+    CSCLCoreUIEFL *coreui = static_cast<CSCLCoreUIEFL*>(data);
+    if (coreui) {
+        coreui->set_screen_rotation_degree(degree);
+    }
+    if (callback) {
+        callback->on_set_rotation_degree(degree);
+    }
+}
+#else
 static Eina_Bool _client_message_cb(void *data, int type, void *event)
 {
     Ecore_X_Event_Client_Message *ev = (Ecore_X_Event_Client_Message *)event;
@@ -459,7 +479,9 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
         impl->init(display);
 
-#ifndef WAYLAND
+#ifdef WAYLAND
+        evas_object_smart_callback_add(main_window, "wm,rotation,changed", win_rotation_changed_cb, this);
+#else
         Ecore_Event_Handler *XClientMsgHandler =
             ecore_event_handler_add(ECORE_X_EVENT_CLIENT_MESSAGE, _client_message_cb, this);
 #endif
