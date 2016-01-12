@@ -64,8 +64,6 @@ CSCLCoreUIEFL::~CSCLCoreUIEFL()
 
 sclboolean CSCLCoreUIEFL::init()
 {
-    sclboolean ret = FALSE;
-
     m_initialized = TRUE;
     m_rotation_degree = -1;
 
@@ -74,7 +72,7 @@ sclboolean CSCLCoreUIEFL::init()
         m_option_window_info[loop].handler = NULL;
     }
 
-    return ret;
+    return TRUE;
 }
 
 void CSCLCoreUIEFL::fini()
