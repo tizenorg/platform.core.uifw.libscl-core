@@ -384,7 +384,7 @@ static Eina_Bool
 check_evas_engine(struct WaylandKeyboard *wlkb)
 {
     Eina_Bool ret = EINA_FALSE;
-    char *env = getenv("ECORE_EVAS_ENGINE");
+    const char *env = getenv("ECORE_EVAS_ENGINE");
 
     if (!env) {
         if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM))
@@ -416,7 +416,7 @@ void CSCLCoreUIEFL::run(const sclchar *display)
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
-        sclchar *uuid = impl->get_uuid();
+        const sclchar *uuid = impl->get_uuid();
         if (!uuid)
             uuid = "";
 
