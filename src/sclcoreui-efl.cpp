@@ -56,6 +56,9 @@ CSCLCoreUIEFL::CSCLCoreUIEFL()
     m_initialized = FALSE;
 
     m_backend_identifier = "EFL";
+
+    m_rotation_degree = 0;
+    m_main_window = SCLWINDOW_INVALID;
 }
 
 CSCLCoreUIEFL::~CSCLCoreUIEFL()
