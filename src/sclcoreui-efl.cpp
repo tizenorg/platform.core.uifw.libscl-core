@@ -312,7 +312,7 @@ int CSCLCoreUIEFL::get_screen_rotation_degree()
     return angle;
 }
 
-void signal_handler(int sig) {
+static void signal_handler(int sig) {
     elm_exit();
 }
 
