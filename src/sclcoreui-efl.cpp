@@ -351,7 +351,7 @@ _wayland_setup(struct WaylandKeyboard *wlkb, Evas_Object *main_window)
 
     wlkb->ee = ecore_evas_ecore_evas_get(evas_object_evas_get(main_window));
     if (!wlkb->ee) {
-        LOGW("ERROR: Unable to create Ecore_Evas object");
+        LOGW("ERROR: Unable to create Ecore_Evas object\n");
         return false;
     }
 
@@ -567,7 +567,7 @@ set_transient_for_app_window(Evas_Object *window)
         if (data) {
             if (type_return == XA_WINDOW) {
                 xAppWindow = *(Window *)data;
-                LOGD("TRANSIENT_FOR SET : %x , %x", xAppWindow, xWindow);
+                LOGD("TRANSIENT_FOR SET : %x , %x\n", xAppWindow, xWindow);
                 ecore_x_icccm_transient_for_set(xWindow, xAppWindow);
             }
             XFree(data);
@@ -605,7 +605,7 @@ set_transient_for_isf_setting_window(Evas_Object *window)
                 ecore_x_window_prop_xid_get(xControlWindow, ecore_x_atom_get("ISF Setting window"),
                     ECORE_X_ATOM_WINDOW, &xSettingWindow, 1);
 
-                LOGD("TRANSIENT_FOR SET : %x , %x", xSettingWindow, xWindow);
+                LOGD("TRANSIENT_FOR SET : %x , %x\n", xSettingWindow, xWindow);
                 ecore_x_icccm_transient_for_set(xWindow, xSettingWindow);
             }
             XFree(data);
@@ -628,7 +628,7 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
             sclboolean ret = false;
             callback->on_check_option_window_availability(&ret);
             if (ret == false) {
-                LOGW("on_create_option_window() is not available");
+                LOGW("on_create_option_window() is not available\n");
                 return SCLWINDOW_INVALID;
             }
         }

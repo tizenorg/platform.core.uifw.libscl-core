@@ -572,7 +572,7 @@ CSCLConnectionISF::~CSCLConnectionISF()
 
 sclboolean CSCLConnectionISF::init()
 {
-    LOGD("Enter");
+    LOGD("Enter\n");
 
     CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
     if (impl) {
@@ -1024,4 +1024,3 @@ extern "C"
         }
     }
 }
-
