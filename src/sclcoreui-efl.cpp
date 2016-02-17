@@ -645,8 +645,7 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
 
     Evas_Object *window = elm_win_util_standard_add("Option window", "Option window");
 
-    elm_win_borderless_set(window, EINA_TRUE);
-
+#ifndef WAYLAND
     Evas_Coord win_w = 0, win_h = 0;
     elm_win_screen_size_get(window, NULL, NULL, &win_w, &win_h);
     int degree = get_screen_rotation_degree();
@@ -655,6 +654,7 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
     } else {
         evas_object_resize(window, win_w, win_h);
     }
+#endif
 
     int rots[] = { 0, 90, 180, 270 };
     elm_win_wm_rotation_available_rotations_set(window, rots, (sizeof(rots) / sizeof(int)));
