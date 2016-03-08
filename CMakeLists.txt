@@ -32,6 +32,7 @@ SET(PKGS_CHECK_MODULES
         isf
         vconf
         libscl-common
+        capi-appfw-application
         )
 
 IF (with_wayland)

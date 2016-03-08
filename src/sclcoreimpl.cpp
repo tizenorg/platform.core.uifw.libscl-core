@@ -16,6 +16,8 @@
  */
 
 #include "sclcoreimpl.h"
+#include <app_common.h>
+#include <dlog.h>
 
 using namespace scl;
 
@@ -284,6 +286,27 @@ void CSCLCoreImpl::on_run(const sclchar *uuid, const sclchar *display)
 
 void CSCLCoreImpl::run()
 {
+    m_core_ui.init();
+    m_connection.init();
+
+    if (!m_uuid) {
+        char *appid = NULL;
+        app_get_id(&appid);
+
+        LOGD("appid : '%s'\n", appid);
+
+        if (appid) {
+            m_uuid = strdup(appid);
+            free(appid);
+        }
+    }
+
+    if (!m_display) {
+        const char *display = getenv("DISPLAY");
+        LOGD("display env : '%s'\n", display);
+        m_display = display ? strdup(display) : strdup(":0");
+    }
+
     m_core_ui.run(m_display);
 
     m_connection.fini();
