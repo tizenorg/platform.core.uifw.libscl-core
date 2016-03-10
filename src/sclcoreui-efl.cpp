@@ -50,7 +50,6 @@ struct WaylandKeyboard wlkb = {0};
 
 using namespace scl;
 
-
 CSCLCoreUIEFL::CSCLCoreUIEFL()
 {
     m_initialized = FALSE;
@@ -109,36 +108,6 @@ void CSCLCoreUIEFL::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
     ecore_x_e_window_rotation_geometry_set(elm_win_xwindow_get(main_window), 270, 0, 0, landscape.height, landscape.width);
     */
 #endif
-}
-
-const char * extract_themename_from_theme_file_path(const char *filepath) {
-    static char themename[_POSIX_PATH_MAX] = {0};
-    memset(themename, 0x00, sizeof(themename));
-
-    if (filepath) {
-        /* There could be more than 1 theme filepath, separated by : */
-        char pathstr[_POSIX_PATH_MAX] = {0};
-        strncpy(pathstr, filepath, _POSIX_PATH_MAX - 1);
-        for (int loop = 0;loop < _POSIX_PATH_MAX;loop++) {
-            if (pathstr[loop] == ':') {
-                /* FIXME : Let's consider the 1st theme filepath only for now */
-                pathstr[loop] = '\0';
-            }
-        }
-
-        if (pathstr[0]) {
-            const char *filename = ecore_file_file_get(pathstr);
-            if (filename) {
-                char *stripname = ecore_file_strip_ext(filename);
-                if (stripname) {
-                    strncpy(themename, stripname, _POSIX_PATH_MAX - 1);
-                    free(stripname);
-                }
-            }
-        }
-    }
-
-    return themename;
 }
 
 static void language_changed_cb(keynode_t *key, void* data)
