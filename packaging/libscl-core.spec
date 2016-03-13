@@ -45,8 +45,8 @@ A devel package of libscl-core library that helps developing S/W Keyboard
 
 
 %build
-export CFLAGS+=" -DTIZEN_DEBUG_ENABLE"
-export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE"
+export CFLAGS+=" -DTIZEN_DEBUG_ENABLE -Werror"
+export CXXFLAGS+=" -DTIZEN_DEBUG_ENABLE -Werror"
 export FFLAGS+=" -DTIZEN_DEBUG_ENABLE"
 
 rm -rf CMakeFiles
