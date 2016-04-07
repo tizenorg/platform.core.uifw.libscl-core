@@ -30,12 +30,17 @@
 #include <string>
 #include "sclconnection.h"
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 //SCL_BEGIN_DECLS
 
 namespace scl
 {
 
-class CSCLConnectionISF : public CSCLConnection
+class LIBSCL_EXPORT_API CSCLConnectionISF : public CSCLConnection
 {
 public:
     CSCLConnectionISF();

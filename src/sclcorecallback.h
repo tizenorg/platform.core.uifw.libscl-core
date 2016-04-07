@@ -26,12 +26,17 @@
 #ifndef __SCL_CORE_CALLBACK_H__
 #define __SCL_CORE_CALLBACK_H__
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 //SCL_BEGIN_DECLS
 
 namespace scl
 {
 
-struct ISCLCoreEventCallback {
+struct LIBSCL_EXPORT_API ISCLCoreEventCallback {
     virtual void on_init() {}
     virtual void on_run(int argc, char **argv) {}
     virtual void on_exit() {}

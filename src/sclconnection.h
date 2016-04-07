@@ -23,6 +23,11 @@
 #include <string>
 #include <scim.h>
 #include "scltypes.h"
+
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
 //SCL_BEGIN_DECLS
 
 namespace scl
@@ -33,7 +38,7 @@ namespace scl
  * This class implements all functions for working as a soft-based keyboard
  * In side of ISE developer, they can modify it by their requirements.
  */
-class CSCLConnection
+class LIBSCL_EXPORT_API CSCLConnection
 {
 public:
     CSCLConnection();

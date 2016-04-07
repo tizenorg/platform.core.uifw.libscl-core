@@ -22,6 +22,11 @@
 
 #include <Ecore.h>
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 //SCL_BEGIN_DECLS
 
 namespace scl
@@ -32,7 +37,7 @@ typedef struct {
     Ecore_Event_Handler *handler;
 } OptionWindowInfo;
 
-class CSCLCoreUIEFL : public CSCLCoreUI
+class LIBSCL_EXPORT_API CSCLCoreUIEFL : public CSCLCoreUI
 {
 public:
     CSCLCoreUIEFL();

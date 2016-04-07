@@ -23,17 +23,22 @@
 
 #include "scltypes.h"
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 namespace scl
 {
 
-typedef enum _SCLKeyMask
+typedef enum LIBSCL_EXPORT_API _SCLKeyMask
 {
     KEY_MASK_NULL       = 0,
     KEY_MASK_SHIFT      = (1<<0),
     KEY_MASK_RELEASE    = (1<<15),
 } SCLKeyMask;
 
-typedef enum _SCLOptionWindowType
+typedef enum LIBSCL_EXPORT_API _SCLOptionWindowType
 {
     OPTION_WINDOW_TYPE_NORMAL,
     OPTION_WINDOW_TYPE_SETTING_APPLICATION,
@@ -41,7 +46,7 @@ typedef enum _SCLOptionWindowType
     OPTION_WINDOW_TYPE_MAX,
 } SCLOptionWindowType;
 
-typedef struct _SclCandidateTable {
+typedef struct LIBSCL_EXPORT_API _SclCandidateTable {
     sclint page_size;
     sclint current_page_start;
     sclint cursor_pos;

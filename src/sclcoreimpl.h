@@ -23,12 +23,17 @@
 #include "sclcorecallback.h"
 #include "sclconnection.h"
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 //SCL_BEGIN_DECLS
 
 namespace scl
 {
 
-class CSCLCoreImpl
+class LIBSCL_EXPORT_API CSCLCoreImpl
 {
 private:
     CSCLCoreImpl();

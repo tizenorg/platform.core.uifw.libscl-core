@@ -28,6 +28,11 @@
 #include "sclcoretypes.h"
 #include "sclcorecallback.h"
 
+#ifndef LIBSCL_EXPORT_API
+#define LIBSCL_EXPORT_API 
+#endif // LIBSCL_EXPORT_API
+
+
 namespace scl
 {
 
@@ -39,7 +44,7 @@ class CSCLCoreImpl;
  *
  * This class implements all functions for working as a soft-based keyboard
  */
-class CSCLCore
+class LIBSCL_EXPORT_API CSCLCore
 {
 public:
     CSCLCore(ISCLCoreEventCallback *callback);
