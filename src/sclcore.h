@@ -229,7 +229,7 @@ public:
     void update_associate_string(const SclCandidateTable &table) const;
 
     /**
-     * @ brief When the input context of ISE is changed,
+     * @brief When the input context of ISE is changed,
      *         ISE can call this function to notify application
      *
      * @param[in] type  type of event.
@@ -238,7 +238,7 @@ public:
     void update_input_context(sclu32 type, sclu32 value);
 
     /**
-     * @ brief When the geometry of ISE is changed,
+     * @brief When the geometry of ISE is changed,
      *         ISE can call this function to notify application
      *
      * @param[in] x x position of ISE geometry.
@@ -249,7 +249,7 @@ public:
     void update_geometry(sclint x, sclint y, sclint width, sclint height);
 
     /**
-     * @ brief Request to get surrounding text.
+     * @brief Request to get surrounding text.
      *
      * @param[in] ic_uuid The helper ISE UUID.
      * @param[in] maxlen_before The max length of before.
@@ -258,7 +258,7 @@ public:
     void get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before, sclint maxlen_after) const;
 
     /**
-     * @ brief Request to delete surrounding text.
+     * @brief Request to delete surrounding text.
      *
      * @param[in] offset The offset for cursor position.
      * @param[in] len The length for delete text.
@@ -266,7 +266,7 @@ public:
     void delete_surrounding_text(sclint offset, sclint len) const;
 
     /**
-     * @ brief Set candidate position in screen.
+     * @brief Set candidate position in screen.
      *
      * @param[in] left The x position in screen.
      * @param[in] top The y position in screen.
@@ -274,40 +274,40 @@ public:
     void set_candidate_position(sclint left, sclint top);
 
     /**
-     * @ brief Set soft candidate style.
+     * @brief Set soft candidate style.
      *
      * @param[in] enable The flag for soft candidate style.
      */
     void enable_soft_candidate(sclboolean enable);
 
     /**
-     * @ brief Request to hide candidate window.
+     * @brief Request to hide candidate window.
      */
     void candidate_hide(void);
 
     /**
-     * @ brief Request to get candidate window size and position.
+     * @brief Request to get candidate window size and position.
      *
      * @param[in] uuid The helper ISE UUID.
      */
     //void get_candidate_window_geometry (const String           &uuid) const;
 
     /**
-     * @ brief Set current keyboard ISE.
+     * @brief Set current keyboard ISE.
      *
      * @param[in] uuid The keyboard ISE UUID.
      */
     void set_keyboard_ise_by_uuid(const sclchar *uuid);
 
     /**
-     * @ brief Request to get current keyboard ISE information.
+     * @brief Request to get current keyboard ISE information.
      *
      * @param[in] uuid The helper ISE UUID.
      */
     void get_keyboard_ise(const sclchar *uuid);
 
     /**
-     * @ brief Request to get uuid list of all keyboard ISEs.
+     * @brief Request to get uuid list of all keyboard ISEs.
      *
      * @param[in] uuid The helper ISE UUID.
      */
@@ -334,7 +334,7 @@ public:
     void destroy_option_window(sclwindow window);
 
     /**
-     * @ brief Request to select text.
+     * @brief Request to select text.
      *
      * @param[in] start The start cursor position in text.
      * @param[in] end The end cursor position in text.
