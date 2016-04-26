@@ -101,6 +101,7 @@ public:
 
     void set_selection(sclint start, sclint end);
     void send_private_command(const sclchar *command);
+    void get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor);
 
 private:
     ISCLCoreEventCallback *m_event_callback;

@@ -249,7 +249,7 @@ public:
     void update_geometry(sclint x, sclint y, sclint width, sclint height);
 
     /**
-     * @brief Request to get surrounding text.
+     * @brief Request to get surrounding text asynchronously.
      *
      * @param[in] ic_uuid The helper ISE UUID.
      * @param[in] maxlen_before The max length of before.
@@ -343,6 +343,15 @@ public:
 
     void send_private_command(const sclchar *command);
 
+    /**
+     * @brief Request to get surrounding text synchronously.
+     *
+     * @param[in] maxlen_before The max length of before.
+     * @param[in] maxlen_after The max length of after.
+     * @param[out] text The surrounding text.
+     * @param[out] cursor The cursor position.
+     */
+    void get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const;
 private:
     CSCLCoreImpl *m_impl;
 };
