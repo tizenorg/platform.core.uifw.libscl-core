@@ -1,17 +1,13 @@
 %bcond_with x
 %bcond_with wayland
 
-%define _optdir /opt
-%define _appdir %{_optdir}/apps
-
 Name:       libscl-core
 Summary:    A library for developing software keyboards
 Version:    0.4.14
 Release:    1
 Group:      Graphics & UI Framework/Input
 License:    Apache-2.0
-Source0:    libscl-core-%{version}.tar.gz
-BuildRequires:  gettext-tools
+Source0:    %{name}-%{version}.tar.gz
 BuildRequires:  cmake
 BuildRequires:  pkgconfig(elementary)
 BuildRequires:  pkgconfig(vconf)
@@ -73,10 +69,10 @@ rm -rf %{buildroot}
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
-%{_libdir}/libscl-core.so
+%{_libdir}/%{name}.so
 %license LICENSE
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}/*
-%{_libdir}/pkgconfig/libscl-core.pc
+%{_libdir}/pkgconfig/%{name}.pc
