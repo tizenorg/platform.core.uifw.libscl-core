@@ -29,7 +29,6 @@ namespace scl
 
 typedef struct {
     sclwindow window;
-    Ecore_Event_Handler *handler;
 } OptionWindowInfo;
 
 class CSCLCoreUIEFL : public CSCLCoreUI
