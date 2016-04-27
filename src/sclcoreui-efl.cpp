@@ -71,7 +71,6 @@ sclboolean CSCLCoreUIEFL::init()
 
     for (int loop = 0;loop < OPTION_WINDOW_TYPE_MAX;loop++) {
         m_option_window_info[loop].window = SCLWINDOW_INVALID;
-        m_option_window_info[loop].handler = NULL;
     }
 
     return TRUE;
@@ -485,7 +484,7 @@ void CSCLCoreUIEFL::run(const sclchar *display)
     }
 }
 
-static Eina_Bool focus_out_cb(void *data, int type, void *event)
+static void focus_out_cb(void *data, Evas *e, void *event)
 {
     OptionWindowInfo *info = static_cast<OptionWindowInfo*>(data);
     if (info) {
@@ -502,13 +501,7 @@ static Eina_Bool focus_out_cb(void *data, int type, void *event)
             evas_object_del(NATIVE_WINDOW_CAST(info->window));
             info->window = NULL;
         }
-        if (info->handler) {
-            ecore_event_handler_del(info->handler);
-            info->handler = NULL;
-        }
     }
-
-    return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -634,13 +627,9 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
         callback->on_create_option_window(window, type);
     }
 
-    Ecore_Event_Handler *handler = NULL;
     if (type == OPTION_WINDOW_TYPE_NORMAL) {
-#ifdef WAYLAND
-        handler = ecore_event_handler_add(ECORE_WL_EVENT_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
-#else
-        handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
-#endif
+        Evas *evas = evas_object_evas_get(window);
+        evas_event_callback_add(evas, EVAS_CALLBACK_CANVAS_FOCUS_OUT, focus_out_cb, &m_option_window_info[type]);
         set_transient_for_app_window(window);
     } else if (type == OPTION_WINDOW_TYPE_SETTING_APPLICATION) {
         set_transient_for_isf_setting_window(window);
@@ -648,7 +637,6 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
     }
 
     m_option_window_info[type].window = window;
-    m_option_window_info[type].handler = handler;
 
     return window;
 }
@@ -667,10 +655,6 @@ void CSCLCoreUIEFL::destroy_option_window(sclwindow window)
         if (m_option_window_info[loop].window == window) {
             evas_object_del(NATIVE_WINDOW_CAST(window));
             m_option_window_info[loop].window = SCLWINDOW_INVALID;
-            if (m_option_window_info[loop].handler) {
-                ecore_event_handler_del(m_option_window_info[loop].handler);
-                m_option_window_info[loop].handler = NULL;
-            }
         }
     }
 }
