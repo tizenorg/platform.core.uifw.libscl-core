@@ -336,3 +336,10 @@ void CSCLCore::send_private_command(const sclchar *command)
         m_impl->send_private_command(command);
     }
 }
+
+void CSCLCore::get_selection_text(sclchar **text) const
+{
+    if (m_impl) {
+        m_impl->get_selection_text(text);
+    }
+}

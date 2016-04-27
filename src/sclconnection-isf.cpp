@@ -1008,14 +1008,25 @@ void CSCLConnectionISF::get_keyboard_ise(const sclchar *uuid)
 void CSCLConnectionISF::set_selection(sclint start, sclint end)
 {
     if (m_initialized) {
-       m_helper_agent.set_selection(start, end);
+        m_helper_agent.set_selection(start, end);
     }
 }
 
 void CSCLConnectionISF::send_private_command(const sclchar *command)
 {
     if (m_initialized) {
-       m_helper_agent.send_private_command(command);
+        m_helper_agent.send_private_command(command);
+    }
+}
+
+void CSCLConnectionISF::get_selection_text(sclchar **text)
+{
+    if (m_initialized) {
+        scim::String selection_text;
+        m_helper_agent.get_selection(selection_text);
+
+        if (text)
+            *text = strdup(selection_text.c_str());
     }
 }
 

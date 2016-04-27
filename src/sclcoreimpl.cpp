@@ -352,3 +352,8 @@ void CSCLCoreImpl::send_private_command(const sclchar *command)
 {
     m_connection.send_private_command(command);
 }
+
+void CSCLCoreImpl::get_selection_text(sclchar **text)
+{
+    m_connection.get_selection_text(text);
+}

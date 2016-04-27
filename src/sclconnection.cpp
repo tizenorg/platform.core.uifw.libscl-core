@@ -335,3 +335,10 @@ void CSCLConnection::send_private_command(const sclchar *command)
         m_impl->send_private_command(command);
     }
 }
+
+void CSCLConnection::get_selection_text(sclchar **text)
+{
+    if (m_impl) {
+        m_impl->get_selection_text(text);
+    }
+}

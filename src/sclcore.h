@@ -352,6 +352,13 @@ public:
      * @param[out] cursor The cursor position.
      */
     void get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const;
+
+    /**
+     * @brief Get the selected text.
+     *
+     * @param[out] text The surrounding text.
+     */
+    void get_selection_text(sclchar **text) const;
 private:
     CSCLCoreImpl *m_impl;
 };
