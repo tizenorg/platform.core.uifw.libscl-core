@@ -659,8 +659,6 @@ void CWebHelperAgentWebSocket::on_get_return_key_type(unsigned int *type)
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_RETURN_KEY_TYPE message */
     if (process_recved_messages_until_reply_found(
@@ -675,7 +673,6 @@ void CWebHelperAgentWebSocket::on_get_return_key_type(unsigned int *type)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void CWebHelperAgentWebSocket::on_set_return_key_disable(unsigned int disabled)
@@ -723,8 +720,6 @@ void CWebHelperAgentWebSocket::on_get_return_key_disable(unsigned int *disabled)
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_RETURN_KEY_DISABLE message */
     if (process_recved_messages_until_reply_found(
@@ -739,7 +734,6 @@ void CWebHelperAgentWebSocket::on_get_return_key_disable(unsigned int *disabled)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void CWebHelperAgentWebSocket::on_set_layout(unsigned int layout)
@@ -787,8 +781,6 @@ void CWebHelperAgentWebSocket::on_get_layout(unsigned int *layout)
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for GET_LAYOUT message */
     if (process_recved_messages_until_reply_found(
@@ -803,7 +795,6 @@ void CWebHelperAgentWebSocket::on_get_layout(unsigned int *layout)
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 void CWebHelperAgentWebSocket::on_reset_input_context(int ic)
@@ -845,8 +836,6 @@ void CWebHelperAgentWebSocket::on_process_key_event(unsigned int code, unsigned 
 
     wait_for_reply_message();
 
-    /* Since we are accessing recved buffer, lock the server mutex again */
-    pthread_mutex_lock(&g_ws_server_mutex);
     std::vector<std::string> values;
     /* Check if we received reply for PROCESS_KEY_EVENT message */
     if (process_recved_messages_until_reply_found(
@@ -861,7 +850,6 @@ void CWebHelperAgentWebSocket::on_process_key_event(unsigned int code, unsigned 
     }
     /* Now process the rest in the recv buffer */
     process_recved_messages();
-    pthread_mutex_unlock(&g_ws_server_mutex);
 }
 
 CWebHelperAgentWebSocket* CWebHelperAgentWebSocket::get_current_instance()
