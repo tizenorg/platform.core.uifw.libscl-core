@@ -23,6 +23,7 @@ BuildRequires:  pkgconfig(x11)
 %endif
 BuildRequires:  pkgconfig(libscl-common)
 BuildRequires:  pkgconfig(capi-appfw-application)
+BuildRequires:  pkgconfig(libwebsockets)
 
 
 %description
