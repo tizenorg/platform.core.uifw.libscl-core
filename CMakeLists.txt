@@ -8,6 +8,8 @@ SET(SRCS
     src/sclconnection.cpp
     src/sclconnection-isf.cpp
     src/sclcore.cpp
+    src/legacy_support/websocket.cpp
+    src/legacy_support/web_helper_agent.cpp
 )
 
 SET(PACKAGE ${PROJECT_NAME})
@@ -22,6 +24,7 @@ MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src
                     ${CMAKE_SOURCE_DIR}/src/include
+                    ${CMAKE_SOURCE_DIR}/src/legacy_support
                    )
 
 INCLUDE(FindPkgConfig)
@@ -32,6 +35,7 @@ SET(PKGS_CHECK_MODULES
         isf
         vconf
         libscl-common
+        libwebsockets
         capi-appfw-application
         )
 

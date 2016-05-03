@@ -74,12 +74,16 @@ sclboolean CSCLCoreUIEFL::init()
         m_option_window_info[loop].handler = NULL;
     }
 
+    m_websocket.init();
+
     return TRUE;
 }
 
 void CSCLCoreUIEFL::fini()
 {
     m_initialized = FALSE;
+
+    m_websocket.exit();
 }
 
 sclwindow CSCLCoreUIEFL::get_main_window()

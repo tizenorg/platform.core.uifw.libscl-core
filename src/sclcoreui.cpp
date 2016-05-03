@@ -15,6 +15,8 @@
  *
  */
 
+#include <dlog.h>
+
 #include "sclcoreui.h"
 
 #include "sclcoreui-efl.h"
@@ -42,9 +44,9 @@ sclboolean CSCLCoreUI::init()
     if (m_impl == NULL) {
         /* There could be other backend implementations.. */
         m_impl = new CSCLCoreUIEFL;
-    }
-    if (m_impl) {
-        ret = m_impl->init();
+        if (m_impl) {
+            ret = m_impl->init();
+        }
     }
     return ret;
 }
