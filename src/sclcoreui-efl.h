@@ -22,6 +22,8 @@
 
 #include <Ecore.h>
 
+#include "legacy_support/websocket.h"
+
 //SCL_BEGIN_DECLS
 
 namespace scl
@@ -57,6 +59,9 @@ private:
     sclwindow m_main_window;
 
     OptionWindowInfo m_option_window_info[OPTION_WINDOW_TYPE_MAX];
+
+    /* This websocket agent is for supporting Tizen 2.X legacy web IMEs that uses websocket */
+    CWebHelperAgentWebSocket m_websocket;
 };
 
 }
