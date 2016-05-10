@@ -242,11 +242,13 @@ void CSCLCore::get_surrounding_text(const sclchar *ic_uuid, sclint maxlen_before
     }
 }
 
-void CSCLCore::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const
+sclint CSCLCore::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const
 {
+    sclint ret = -1;
     if (m_impl) {
-        m_impl->get_surrounding_text(maxlen_before, maxlen_after, text, cursor);
+        ret = m_impl->get_surrounding_text(maxlen_before, maxlen_after, text, cursor);
     }
+    return ret;
 }
 
 void CSCLCore::delete_surrounding_text(sclint offset, sclint len) const

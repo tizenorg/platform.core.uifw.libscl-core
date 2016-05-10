@@ -83,7 +83,7 @@ public:
     virtual void get_keyboard_ise(const sclchar *uuid);
     virtual void set_selection(sclint start, sclint end);
     virtual void send_private_command(const sclchar *command);
-    virtual void get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor);
+    virtual sclint get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor);
     virtual void get_selection_text(sclchar **text);
 protected:
     std::string m_backend_identifier;

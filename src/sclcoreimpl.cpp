@@ -232,9 +232,9 @@ void CSCLCoreImpl::get_surrounding_text(const sclchar* ic_uuid, sclint maxlen_be
     m_connection.get_surrounding_text(ic_uuid, maxlen_before, maxlen_after);
 }
 
-void CSCLCoreImpl::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor)
+sclint CSCLCoreImpl::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor)
 {
-    m_connection.get_surrounding_text(maxlen_before, maxlen_after, text, cursor);
+    return m_connection.get_surrounding_text(maxlen_before, maxlen_after, text, cursor);
 }
 
 void CSCLCoreImpl::delete_surrounding_text(sclint offset, sclint len) const
