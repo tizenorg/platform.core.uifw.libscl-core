@@ -350,8 +350,10 @@ public:
      * @param[in] maxlen_after The max length of after.
      * @param[out] text The surrounding text.
      * @param[out] cursor The cursor position.
+     *
+     * @return 0 on success, otherwise a negative error value
      */
-    void get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const;
+    sclint get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor) const;
 
     /**
      * @brief Get the selected text.

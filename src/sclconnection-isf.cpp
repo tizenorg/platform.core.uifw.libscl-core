@@ -949,15 +949,20 @@ void CSCLConnectionISF::get_surrounding_text(const sclchar *ic_uuid, sclint maxl
     }
 }
 
-void CSCLConnectionISF::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor)
+sclint CSCLConnectionISF::get_surrounding_text(sclint maxlen_before, sclint maxlen_after, sclchar **text, int &cursor)
 {
     if (m_initialized) {
         scim::String surrounding_text;
         m_helper_agent.get_surrounding_text(maxlen_before, maxlen_after, surrounding_text, cursor);
 
-        if (text)
+        if (text) {
             *text = strdup(surrounding_text.c_str());
+            if (*text == NULL) {
+                return -1;
+            }
+        }
     }
+    return 0;
 }
 
 void CSCLConnectionISF::delete_surrounding_text(sclint offset, sclint len) const
