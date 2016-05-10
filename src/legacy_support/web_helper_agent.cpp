@@ -181,9 +181,10 @@ std::string CMagicKeyManager::get_magic_key()
         const char magic_key_range_lower = '0';
         const char magic_key_range_upper = 'Z';
 
-        srand(time(NULL));
+        unsigned int seed = time(NULL);
         for(int loop = 0;loop < MAGIC_KEY_LENGTH;loop++) {
-            magic_key[loop] = (rand() % (magic_key_range_upper - magic_key_range_lower)) + magic_key_range_lower;
+            magic_key[loop] = (rand_r(&seed) %
+                    (magic_key_range_upper - magic_key_range_lower)) + magic_key_range_lower;
         }
         magic_key[MAGIC_KEY_LENGTH] = '\0';
 
