@@ -85,7 +85,33 @@ struct ISCLCoreEventCallback {
 
     virtual void on_candidate_show(sclint ic, const sclchar *ic_uuid) {}
     virtual void on_candidate_hide(sclint ic, const sclchar *ic_uuid) {}
+
+    /* Added in callback interface version 1.1 */
+    virtual void on_process_input_device_event(sclu32 &type, sclchar *data, size_t &len, sclu32 *ret) {}
+
+    ISCLCoreEventCallback() {
+        /* Current callback interface version is 1.1 */
+        m_version_major = 1;
+        m_version_minor = 1;
+    }
+    sclint get_version_major() { return m_version_major; }
+    sclint get_version_minor() { return m_version_minor; }
+private:
+    int m_version_major;
+    int m_version_minor;
 };
+
+inline sclboolean check_interface_version(ISCLCoreEventCallback *callback, int version_major, int version_minor)
+{
+    if (callback) {
+        if (callback->get_version_major() >= version_major) {
+            if (callback->get_version_minor() >= version_minor) {
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
 
 }
 
