@@ -534,6 +534,19 @@ static void slot_candidate_hide(const scim::HelperAgent *agent, int ic, const sc
     }
 }
 
+static void slot_process_input_device_event(const scim::HelperAgent *agent, scim::uint32 &type, char *data, size_t &len, scim::uint32 &ret) {
+    CSCLCoreImpl *impl = CSCLCoreImpl::get_instance();
+    if (impl) {
+        ISCLCoreEventCallback *callback = impl->get_core_event_callback();
+        if (callback) {
+            /* Input Device Event callback is available in versions after 1.1 */
+            if (check_interface_version(callback, 1, 1)) {
+                callback->on_process_input_device_event(type, data, len, &ret);
+            }
+        }
+    }
+}
+
 /* Internal input handler function */
 Eina_Bool input_handler(void *data, Ecore_Fd_Handler *fd_handler)
 {
@@ -631,6 +644,7 @@ sclboolean CSCLConnectionISF::init()
         m_helper_agent.signal_connect_process_key_event(scim::slot(slot_process_key_event));
         m_helper_agent.signal_connect_candidate_show(scim::slot(slot_candidate_show));
         m_helper_agent.signal_connect_candidate_hide(scim::slot(slot_candidate_hide));
+        m_helper_agent.signal_connect_process_input_device_event(scim::slot(slot_process_input_device_event));
 
         m_initialized = TRUE;
     }
