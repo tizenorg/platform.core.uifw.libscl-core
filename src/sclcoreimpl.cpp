@@ -272,17 +272,23 @@ void CSCLCoreImpl::on_run(const sclchar *uuid, const sclchar *display)
     m_core_ui.init();
     m_connection.init();
 
-    if (m_uuid) {
-        free(m_uuid);
+    LOGD ("uuid : '%s', display : '%s'\n", uuid, display);
+
+    if (uuid && strlen(uuid) > 0) {
+        if (m_uuid) {
+            free(m_uuid);
+        }
+
+        m_uuid = strdup(uuid);
     }
 
-    m_uuid = strdup(uuid);
+    if (display) {
+        if (m_display) {
+            free(m_display);
+        }
 
-    if (m_display) {
-        free(m_display);
+        m_display = strdup(display);
     }
-
-    m_display = strdup(display);
 
     if (m_event_callback) {
         m_event_callback->on_run(0, NULL);
