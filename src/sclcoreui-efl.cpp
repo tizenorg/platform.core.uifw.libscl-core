@@ -43,9 +43,20 @@ struct WaylandKeyboard
     struct wl_surface *surface;
     struct wl_input_panel *ip;
     struct wl_output *output;
+    struct wl_input_panel_surface *ips;
 };
 
 struct WaylandKeyboard wlkb = {0};
+
+#define RENDER_PRE_TIMEOUT 1.0f
+static Ecore_Timer *_render_pre_timer = NULL;
+static void delete_render_pre_timer()
+{
+    if (_render_pre_timer) {
+        ecore_timer_del(_render_pre_timer);
+        _render_pre_timer = NULL;
+    }
+}
 #endif
 
 using namespace scl;
@@ -295,7 +306,6 @@ _wayland_setup(struct WaylandKeyboard *wlkb, Evas_Object *main_window)
     Eina_Inlist *globals;
     struct wl_registry *registry;
     Ecore_Wl_Global *global;
-    struct wl_input_panel_surface *ips;
 
     if (!(registry = ecore_wl_registry_get()))
         return false;
@@ -342,13 +352,13 @@ _wayland_setup(struct WaylandKeyboard *wlkb, Evas_Object *main_window)
         return false;
     }
 
-    ips = wl_input_panel_get_input_panel_surface(wlkb->ip, wlkb->surface);
-    if (!ips) {
+    wlkb->ips = wl_input_panel_get_input_panel_surface(wlkb->ip, wlkb->surface);
+    if (!wlkb->ips) {
         LOGW("Couldn't get input panel surface\n");
         return false;
     }
 
-    wl_input_panel_surface_set_toplevel(ips, wlkb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
+    wl_input_panel_surface_set_toplevel(wlkb->ips, wlkb->output, WL_INPUT_PANEL_SURFACE_POSITION_CENTER_BOTTOM);
 
     return true;
 }
@@ -666,4 +676,61 @@ void CSCLCoreUIEFL::destroy_option_window(sclwindow window)
 void CSCLCoreUIEFL::set_screen_rotation_degree(int degree)
 {
     m_rotation_degree = degree;
+}
+
+#ifdef WAYLAND
+static void _render_pre_cb(void *data, Evas *e, void *event_info)
+{
+    LOGD("_render_pre_cb() called, now invoking wl_input_panel_surface_set_ready()");
+
+    wl_input_panel_surface_set_ready(wlkb.ips, 1);
+
+    Evas_Object *main_window = NATIVE_WINDOW_CAST(data);
+    evas_event_callback_del_full(evas_object_evas_get(main_window),
+        EVAS_CALLBACK_RENDER_PRE, _render_pre_cb, main_window);
+
+    delete_render_pre_timer();
+}
+
+static Eina_Bool _render_pre_timeout(void *data)
+{
+    LOGD("_render_pre_timer expired, forcing to call _render_pre_cb() callback");
+
+    _render_pre_cb(data, NULL, NULL);
+
+    return ECORE_CALLBACK_CANCEL;
+}
+#endif
+
+void CSCLCoreUIEFL::process_keyboard_ui_state_change(KEYBOARD_UI_STATE state)
+{
+#ifdef WAYLAND
+    static Evas_Object *force_update_helper_obj = NULL;
+    static int force_update_num = 0;
+
+    if (state == KEYBOARD_UI_STATE_WILL_SHOW) {
+        evas_event_callback_add(evas_object_evas_get(NATIVE_WINDOW_CAST(m_main_window)),
+            EVAS_CALLBACK_RENDER_PRE, _render_pre_cb, (void*)m_main_window);
+        _render_pre_timer = ecore_timer_add (RENDER_PRE_TIMEOUT, _render_pre_timeout, (void*)m_main_window);
+        LOGD("Registered RENDER_PRE callback, _render_pre_cb() and a timer callback");
+    } else if (state == KEYBOARD_UI_STATE_DID_SHOW) {
+        LOGD("Forcing keyboard window to render : %d", force_update_num);
+
+        /* Since the ISE is waiting for RENDER_PRE event, we need to make sure the render event is
+         * occured on our ISE window. Since right now there is no proper way to trigger render event
+         * manually, we are creating a half transparent box above the keyboard window. Need to find
+         * more appropriate way to generate render event */
+        if (force_update_helper_obj) evas_object_del(force_update_helper_obj);
+        force_update_helper_obj = elm_bg_add (NATIVE_WINDOW_CAST(m_main_window));
+        evas_object_color_set(force_update_helper_obj, 255, 255, 255, 1);
+        evas_object_resize(force_update_helper_obj, 1, 1);
+        evas_object_move(force_update_helper_obj, force_update_num % 100, 0);
+        evas_object_layer_set(force_update_helper_obj, EVAS_LAYER_MAX);
+        evas_object_show (force_update_helper_obj);
+        force_update_num++;
+    } else if (state == KEYBOARD_UI_STATE_WILL_HIDE) {
+        if (force_update_helper_obj) evas_object_del(force_update_helper_obj);
+        force_update_helper_obj = NULL;
+    }
+#endif
 }

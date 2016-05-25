@@ -51,6 +51,8 @@ public:
     virtual void destroy_option_window(sclwindow window);
 
     void set_screen_rotation_degree(int degree);
+
+    void process_keyboard_ui_state_change(KEYBOARD_UI_STATE state);
 private:
     sclboolean m_initialized;
 

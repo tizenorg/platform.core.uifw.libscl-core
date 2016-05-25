@@ -107,3 +107,10 @@ void CSCLCoreUI::destroy_option_window(sclwindow window)
         m_impl->destroy_option_window(window);
     }
 }
+
+void CSCLCoreUI::process_keyboard_ui_state_change(KEYBOARD_UI_STATE state)
+{
+    if (m_impl) {
+        m_impl->process_keyboard_ui_state_change(state);
+    }
+}

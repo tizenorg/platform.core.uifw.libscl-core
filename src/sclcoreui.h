@@ -27,6 +27,14 @@
 namespace scl
 {
 
+enum KEYBOARD_UI_STATE
+{
+    KEYBOARD_UI_STATE_DID_HIDE,
+    KEYBOARD_UI_STATE_WILL_HIDE,
+    KEYBOARD_UI_STATE_DID_SHOW,
+    KEYBOARD_UI_STATE_WILL_SHOW,
+};
+
 /**
  * @brief The base class that provides features for a soft-keyboard
  *
@@ -69,6 +77,11 @@ public:
      * @brief Requests to destroy an option window
      */
     virtual void destroy_option_window(sclwindow window);
+
+    /**
+    * @brief This API requests each SCLCoreUI backends to process keyboard UI state change event
+    */
+    virtual void process_keyboard_ui_state_change(KEYBOARD_UI_STATE state);
 
 protected:
     std::string m_backend_identifier;

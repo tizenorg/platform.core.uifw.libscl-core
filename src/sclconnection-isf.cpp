@@ -161,7 +161,14 @@ static void slot_ise_show(const scim::HelperAgent *agent, int ic, char *buf, siz
             } else {
                 LOGD("\n-=-= WARNING - buf %p len %d size %d \n", buf, len, sizeof(ise_context));
             }
+            CSCLCoreUI* ui = impl->get_core_ui();
+            if (ui) {
+                ui->process_keyboard_ui_state_change(KEYBOARD_UI_STATE_WILL_SHOW);
+            }
             callback->on_ise_show(ic, impl->get_screen_rotation_degree(), ise_context);
+            if (ui) {
+                ui->process_keyboard_ui_state_change(KEYBOARD_UI_STATE_DID_SHOW);
+            }
         }
     }
 }
@@ -171,7 +178,14 @@ static void slot_ise_hide(const scim::HelperAgent *agent, int ic, const scim::St
     if (impl) {
         ISCLCoreEventCallback *callback = impl->get_core_event_callback();
         if (callback) {
+            CSCLCoreUI* ui = impl->get_core_ui();
+            if (ui) {
+                ui->process_keyboard_ui_state_change(KEYBOARD_UI_STATE_WILL_HIDE);
+            }
             callback->on_ise_hide(ic, ic_uuid.c_str());
+            if (ui) {
+                ui->process_keyboard_ui_state_change(KEYBOARD_UI_STATE_DID_HIDE);
+            }
         }
     }
 }
