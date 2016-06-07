@@ -1028,7 +1028,7 @@ void CSCLConnectionISF::get_selection_text(sclchar **text)
 {
     if (m_initialized) {
         scim::String selection_text;
-        m_helper_agent.get_selection(selection_text);
+        m_helper_agent.get_selection_text(selection_text);
 
         if (text)
             *text = strdup(selection_text.c_str());
