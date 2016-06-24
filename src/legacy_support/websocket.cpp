@@ -108,7 +108,6 @@ static int callback_keyboard(struct lws *wsi,
     CWebHelperAgentWebSocket *agent = CWebHelperAgentWebSocket::get_current_instance();
 
     switch (reason) {
-
     case LWS_CALLBACK_ESTABLISHED:
         pss->session_id = ++last_session_id;
         LOGD("LWS_CALLBACK_ESTABLISHED : %p %d", g_ws_server_context, pss->session_id);
@@ -883,7 +882,6 @@ void CWebHelperAgentWebSocket::wait_for_reply_message()
     pthread_mutex_lock(&g_ws_query_mutex);
     pthread_cond_timedwait(&g_ws_query_condition, &g_ws_query_mutex, &timeout);
     pthread_mutex_unlock(&g_ws_query_mutex);
-
 }
 
 void CWebHelperAgentWebSocket::process_recved_messages()

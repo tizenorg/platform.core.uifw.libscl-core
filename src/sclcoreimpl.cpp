@@ -272,7 +272,7 @@ void CSCLCoreImpl::on_run(const sclchar *uuid, const sclchar *display)
     m_core_ui.init();
     m_connection.init();
 
-    LOGD ("uuid : '%s', display : '%s'\n", uuid, display);
+    LOGD("uuid : '%s', display : '%s'\n", uuid, display);
 
     if (uuid && strlen(uuid) > 0) {
         if (m_uuid) {

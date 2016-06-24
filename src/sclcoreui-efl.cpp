@@ -100,9 +100,9 @@ sclwindow CSCLCoreUIEFL::get_main_window()
 {
     if (m_initialized) {
         return m_main_window;
-    }
-    else
+    } else {
         return NULL;
+    }
 }
 
 void CSCLCoreUIEFL::set_keyboard_size_hints(SclSize portrait, SclSize landscape)
@@ -370,16 +370,15 @@ check_evas_engine(struct WaylandKeyboard *wlkb)
     const char *env = getenv("ECORE_EVAS_ENGINE");
 
     if (!env) {
-        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM))
+        if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_SHM)) {
             env = "wayland_shm";
-        else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL))
+        } else if (ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_WAYLAND_EGL)) {
             env = "wayland_egl";
-        else {
+        } else {
             LOGW("ERROR: Ecore_Evas does must be compiled with support for Wayland engines\n");
             goto err;
         }
-    }
-    else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0) {
+    } else if (strcmp(env, "wayland_shm") != 0 && strcmp(env, "wayland_egl") != 0) {
         LOGW("ERROR: ECORE_EVAS_ENGINE must be set to either 'wayland_shm' or 'wayland_egl'\n");
         goto err;
     }
@@ -607,9 +606,9 @@ sclwindow CSCLCoreUIEFL::create_option_window(SCLOptionWindowType type)
                 LOGW("on_create_option_window() is not available\n");
                 return SCLWINDOW_INVALID;
             }
-        }
-        else
+        } else {
             return SCLWINDOW_INVALID;
+        }
     }
 
     /* Just in case the previous option window for setting application exists */
@@ -711,7 +710,7 @@ void CSCLCoreUIEFL::process_keyboard_ui_state_change(KEYBOARD_UI_STATE state)
     if (state == KEYBOARD_UI_STATE_WILL_SHOW) {
         evas_event_callback_add(evas_object_evas_get(NATIVE_WINDOW_CAST(m_main_window)),
             EVAS_CALLBACK_RENDER_PRE, _render_pre_cb, (void*)m_main_window);
-        _render_pre_timer = ecore_timer_add (RENDER_PRE_TIMEOUT, _render_pre_timeout, (void*)m_main_window);
+        _render_pre_timer = ecore_timer_add(RENDER_PRE_TIMEOUT, _render_pre_timeout, (void*)m_main_window);
         LOGD("Registered RENDER_PRE callback, _render_pre_cb() and a timer callback");
     } else if (state == KEYBOARD_UI_STATE_DID_SHOW) {
         LOGD("Forcing keyboard window to render : %d", force_update_num);
@@ -721,12 +720,12 @@ void CSCLCoreUIEFL::process_keyboard_ui_state_change(KEYBOARD_UI_STATE state)
          * manually, we are creating a half transparent box above the keyboard window. Need to find
          * more appropriate way to generate render event */
         if (force_update_helper_obj) evas_object_del(force_update_helper_obj);
-        force_update_helper_obj = elm_bg_add (NATIVE_WINDOW_CAST(m_main_window));
+        force_update_helper_obj = elm_bg_add(NATIVE_WINDOW_CAST(m_main_window));
         evas_object_color_set(force_update_helper_obj, 255, 255, 255, 1);
         evas_object_resize(force_update_helper_obj, 1, 1);
         evas_object_move(force_update_helper_obj, force_update_num % 100, 0);
         evas_object_layer_set(force_update_helper_obj, EVAS_LAYER_MAX);
-        evas_object_show (force_update_helper_obj);
+        evas_object_show(force_update_helper_obj);
         force_update_num++;
     } else if (state == KEYBOARD_UI_STATE_WILL_HIDE) {
         if (force_update_helper_obj) evas_object_del(force_update_helper_obj);
