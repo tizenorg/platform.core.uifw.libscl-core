@@ -418,7 +418,6 @@ void CSCLCoreUIEFL::run(const sclchar *display)
         LOGD("Selected engine: '%s'\n", wlkb.ee_engine);
 #endif
 
-        elm_config_accel_preference_set("3d");
         elm_policy_set(ELM_POLICY_THROTTLE, ELM_POLICY_THROTTLE_NEVER);
 
         Evas_Object *main_window = elm_win_add(NULL, uuid, ELM_WIN_UTILITY);
